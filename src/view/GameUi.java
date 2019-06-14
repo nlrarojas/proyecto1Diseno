@@ -53,7 +53,7 @@ public class GameUi {
 
     
     public GameUi() { 
-        //initialize command System
+        //initialize command System----------------------------------------------------------------
         commandManager = new CommandManager();
         commandManager.registerCommand("Army", new CommandArmyCreator());
         commandManager.registerCommand("Character", new CommandCharacterCreater());
@@ -61,6 +61,9 @@ public class GameUi {
         commandManager.registerCommand("User", new CommandUserCreator());
         commandManager.registerCommand("Village", new CommandVillageSettingsManager());
         commandManager.registerCommand("Weapon", new CommandWeaponCreator());
+        
+        
+        
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         font = new BitmapFont();

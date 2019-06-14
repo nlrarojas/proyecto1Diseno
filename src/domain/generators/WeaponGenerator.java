@@ -3,32 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
+package domain.generators;
 
-import sun.security.jca.GetInstance;
+import domain.Weapon;
 
 /**
  *
  * @author Charlie
  * 
- * TODO
- * -must implement get weapons and connec with file processor
+ * Todo
+ * -implement weapon load system
  */
-public class DefenseGenerator {
+public class WeaponGenerator {
+    private static WeaponGenerator instance = null;
     
-    private static DefenseGenerator instance = null;
+    private Weapon[] weapons;
     
-    private DefenseGenerator(){
+    private WeaponGenerator(){
     }
     
-    public String getWeapons(){
+    public Weapon[] getWeapon(String type){
         
         throw new UnsupportedOperationException("Not implemented function get weapons");
     }
     
-    public DefenseGenerator GetInstance(){
+    public WeaponGenerator GetInstance(){
         if(instance == null){
-            instance = new DefenseGenerator();
+            instance = new WeaponGenerator();
         }
         
         return instance;

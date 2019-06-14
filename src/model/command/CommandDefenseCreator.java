@@ -24,6 +24,7 @@ public class CommandDefenseCreator implements ICommand, IAlmacenable {
     }
     
      public void save(){
-         
+         throw new UnsupportedOperationException("Not implement save function");
+    
     }
 }
