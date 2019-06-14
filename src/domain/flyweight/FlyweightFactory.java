@@ -23,7 +23,7 @@ public class FlyweightFactory {
     }
     
     
-    public Weapon makeWeapon(String name,int scope,int damage,int level,int exposureRate,String image ){
+    public Weapon makeWeapon(String name,int scope,int damage,int level,int exposureRate, String image ){
         if(weaponCache.containsKey(name)){
             return weaponCache.get(name);
         }else{
