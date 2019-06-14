@@ -1,5 +1,7 @@
 package domain;
 
+import com.badlogic.gdx.graphics.Texture;
+
 /**
  *
  * @author Nelson
@@ -10,7 +12,8 @@ public class Weapon {
     protected int damage;
     protected int level;
     protected int exposureRate;
-    protected String image;
+    protected String imageName;
+    protected Texture texture;
 
     public Weapon(String name, int scope, int damage, int level, int exposureRate, String image) {
         this.name = name;
@@ -18,7 +21,8 @@ public class Weapon {
         this.damage = damage;
         this.level = level;
         this.exposureRate = exposureRate;
-        this.image = image;
+        this.imageName = image;
+        this.texture = new Texture(this.imageName);
     }
 
     public String getName() {
@@ -62,15 +66,19 @@ public class Weapon {
     }
 
     public String getImage() {
-        return image;
+        return imageName;
     }
 
     public void setImage(String image) {
-        this.image = image;
+        this.imageName = image;
+    }
+
+    public Texture getTexture() {
+        return texture;
     }
 
     @Override
     public String toString() {
-        return "Weapon{" + "name=" + name + ", scope=" + scope + ", damage=" + damage + ", level=" + level + ", exposureRate=" + exposureRate + ", image=" + image + '}';
+        return "Weapon{" + "name=" + name + ", scope=" + scope + ", damage=" + damage + ", level=" + level + ", exposureRate=" + exposureRate + ", image=" + imageName + '}';
     }    
 }
