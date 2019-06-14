@@ -20,11 +20,11 @@ public class GameManagerCommand implements ICommand, IAlmacenable {
     
     
     public void execute(){
-    
+        throw new UnsupportedOperationException("Not implement command");
         
     }
     
      public void save(){
-    
+         throw new UnsupportedOperationException("Not implement save function");
     }
 }

@@ -14,11 +14,13 @@ import domain.IAlmacenable;
  * -implement execute function
  */
 public class CommandArmyCreator implements ICommand{
-    
-    public void execute(){
-    
-        
+
+    @Override
+    public void execute() {
+        throw new UnsupportedOperationException("Not implement command"); //To change body of generated methods, choose Tools | Templates.
     }
+    
+
     
    
 }
