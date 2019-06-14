@@ -23,6 +23,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import domain.Army;
+import model.command.CommandArmyCreator;
+import model.command.CommandCharacterCreater;
+import model.command.CommandDefenseCreator;
+import model.command.CommandManager;
+import model.command.CommandUserCreator;
+import model.command.CommandVillageSettingsManager;
+import model.command.CommandWeaponCreator;
 
 /**
  *
@@ -34,6 +42,7 @@ public class GameUi {
     BitmapFont font;
     Skin skin;
     TextureAtlas buttonAtlas;
+    CommandManager commandManager;
     
     
     //constant colors 
@@ -43,7 +52,15 @@ public class GameUi {
     final Color SELECTED_TEXT = new Color(0.79f, 0.91f, 0.93f, 0.5f);
 
     
-    public GameUi() {      
+    public GameUi() { 
+        //initialize command System
+        commandManager = new CommandManager();
+        commandManager.registerCommand("Army", new CommandArmyCreator());
+        commandManager.registerCommand("Character", new CommandCharacterCreater());
+        commandManager.registerCommand("Defense", new CommandDefenseCreator());
+        commandManager.registerCommand("User", new CommandUserCreator());
+        commandManager.registerCommand("Village", new CommandVillageSettingsManager());
+        commandManager.registerCommand("Weapon", new CommandWeaponCreator());
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         font = new BitmapFont();
