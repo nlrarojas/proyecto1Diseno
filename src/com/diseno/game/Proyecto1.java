@@ -7,13 +7,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import view.CreatorUi;
 import view.GameUi;
+import view.MenuUi;
+import view.UiManager;
 
 public class Proyecto1 extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	private BitmapFont font;
-        GameUi gameUi;
+        UiManager uiManager;
         
         //constants for screen with and height in pixels
         private final int WIDTH = 1280;
@@ -29,7 +32,15 @@ public class Proyecto1 extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg"); 
                 font = new BitmapFont();
                 font.setColor(Color.BLACK);
-                gameUi = new GameUi();
+                
+                //creat ui
+                uiManager = new UiManager();
+                uiManager.addUi("menu", new MenuUi(uiManager));
+                uiManager.addUi("creator", new CreatorUi(uiManager));
+                uiManager.addUi("game", new GameUi(uiManager));
+                //set starting ui
+                uiManager.setUi("menu");
+                
                 
 	}
 
@@ -45,7 +56,7 @@ public class Proyecto1 extends ApplicationAdapter {
                 font.draw(batch, "Proyecto 1 Diseño!!", WIDTH/2 -  100, HEIGHT-20);
                 batch.end();
                 
-                gameUi.render();
+                uiManager.render();
                 
 	}
 	

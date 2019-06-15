@@ -5,25 +5,16 @@
  */
 package view;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import domain.Army;
 import model.command.CommandArmyCreator;
 import model.command.CommandCharacterCreater;
 import model.command.CommandDefenseCreator;
@@ -36,15 +27,21 @@ import model.command.CommandWeaponCreator;
  *
  * @author Charlie
  */
-public class GameUi implements IUserInterface {
+public class MenuUi implements IUserInterface {
     public Stage stage;
-    TextButton button;
+    //TextButton button;
     BitmapFont font;
     Skin skin;
     TextureAtlas buttonAtlas;
     CommandManager commandManager;
     private UiManager manager;
     
+    
+    //ui elements
+    //TextButton playButton;
+    //TextButton createButton;
+    //TextButton exitButton;
+    //TextField textField;
     
     //constant colors 
     final Color IDDLE_BUTTON = new Color(0.3f,0.44f ,0.46f , 1);
@@ -53,9 +50,9 @@ public class GameUi implements IUserInterface {
     final Color SELECTED_TEXT = new Color(0.79f, 0.91f, 0.93f, 0.5f);
 
     
-    public GameUi(UiManager manager) {
+    public MenuUi(UiManager manager) { 
         this.manager = manager;
-        //initialize command System----------------------------------------------------------------
+        //initiali ze command System----------------------------------------------------------------
         commandManager = new CommandManager();
         commandManager.registerCommand("Army", new CommandArmyCreator());
         commandManager.registerCommand("Character", new CommandCharacterCreater());
@@ -67,20 +64,20 @@ public class GameUi implements IUserInterface {
         
         
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
         font = new BitmapFont();
+        //font.getData().setScale(2,2);
         
         //styles -----------------------------------------------------------------------------------
         
         //button style
-        TextButtonStyle textButtonStyle = new TextButtonStyle();
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font;
-        textButtonStyle.up = UiUtils.createButtonSprite(IDDLE_BUTTON, 100, 40);
-        textButtonStyle.down = UiUtils.createButtonSprite(DOWN_BUTTON, 100, 40);
+        textButtonStyle.up = UiUtils.createButtonSprite(IDDLE_BUTTON, 200, 60);
+        textButtonStyle.down = UiUtils.createButtonSprite(DOWN_BUTTON, 200, 60);
         //textButtonStyle.checked = createButtonSprite(CHECKED_BUTTON, 100, 40);
         
         //text field style
-        TextFieldStyle textFieldStyle = new TextFieldStyle();
+        TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
         textFieldStyle.font = font;
         textFieldStyle.background = UiUtils.createButtonSprite(IDDLE_BUTTON, 100, 40);
         textFieldStyle.cursor = UiUtils.createButtonSprite(Color.BLACK, 5, 40);
@@ -89,8 +86,14 @@ public class GameUi implements IUserInterface {
         
         
         //create ui elements -----------------------------------------------------------------------
-        button = new TextButton("Button1", textButtonStyle);
-        button.setPosition(0, 400);
+        TextButton playButton = new TextButton("Play", textButtonStyle);
+        playButton.setPosition( UiUtils.WIDHT/2 - 100,UiUtils.HEIGHT-300);
+        
+        TextButton createButton = new TextButton("Create", textButtonStyle);
+        createButton.setPosition(UiUtils.WIDHT/2 - 100,UiUtils.HEIGHT-450);
+        
+        TextButton exitButton = new TextButton("Exit", textButtonStyle);
+        exitButton.setPosition(UiUtils.WIDHT/2 - 100,UiUtils.HEIGHT-600);
         
         TextField textField = new TextField("Data",textFieldStyle);
         textField.setPosition(24,73);
@@ -98,38 +101,56 @@ public class GameUi implements IUserInterface {
         
         
         //add ui elements to scene ------------------------------------------------------------------
-        stage.addActor(button);
+        stage.addActor(playButton);
+        stage.addActor(createButton);
+        stage.addActor(exitButton);
         stage.addActor(textField);
         
         
-        //event listerner
-        button.addListener(new ChangeListener() {
+        //event listerner----------------------------------------------------------------------------
+        playButton.addListener(new ChangeListener() {
         @Override
-        public void changed (ChangeEvent event, Actor actor) {
-            System.out.println("Button Pressed");
+        public void changed (ChangeListener.ChangeEvent event, Actor actor) {
+            MenuUi.this.setUi("game");
+            System.out.println("Going to game");
         }
         });
         
-        
-        textField.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                System.out.println(((TextField)actor).getText());
-            }
+        createButton.addListener(new ChangeListener() {
+        @Override
+        public void changed (ChangeListener.ChangeEvent event, Actor actor) {
+            MenuUi.this.setUi("creator");
+            System.out.println("Going to creator");
+        }
         });
+        
+        exitButton.addListener(new ChangeListener() {
+        @Override
+        public void changed (ChangeListener.ChangeEvent event, Actor actor) {
+            System.out.println("Going to exit");
+              Gdx.app.exit();
+        }
+        });
+         
+        
+        
     }
     
 
     public void render() {      
         stage.draw();
-        stage.act();   
+        stage.act();
     }
     
+
     public void activate(){
         Gdx.input.setInputProcessor(stage);
+        
+        
     }
     
     public void setUi(String name){
         manager.setUi(name);
     }
+    
 }
