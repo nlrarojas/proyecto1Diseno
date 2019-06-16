@@ -14,8 +14,6 @@ public abstract class ICharacterComponent {
     protected int cost;
     protected Weapon weapon;
     
-    public abstract void decorate();
-    public abstract void attack();
 
     public ICharacterComponent(String name, Appearance appearance, int life, int punchesPerTime, int spaces, int appearanceLevel, int cost, Weapon weapon) {
         this.name = name;
@@ -96,4 +94,6 @@ public abstract class ICharacterComponent {
     public String toString() {
         return "ICharacterComponent{" + "name=" + name + ", appearance=" + appearance + ", life=" + life + ", punchesPerTime=" + punchesPerTime + ", spaces=" + spaces + ", appearanceLevel=" + appearanceLevel + ", cost=" + cost + ", weapon=" + weapon + '}';
     }    
+    
+    
 }

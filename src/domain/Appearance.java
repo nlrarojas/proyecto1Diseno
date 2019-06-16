@@ -1,5 +1,7 @@
 package domain;
 
+import com.badlogic.gdx.graphics.Texture;
+
 /**
  *
  * @author Nelson
@@ -9,7 +11,13 @@ public class Appearance {
     protected String armor;
     protected String helmet;
     protected String chothing;
+    
+    //appearence textures
+    protected Texture armorTexture;
+    protected Texture helmetTexture;
+    protected Texture clothingTexture;
 
+    
     public Appearance(String type, String armor, String helmet, String chothing) {
         this.type = type;
         this.armor = armor;
@@ -53,4 +61,30 @@ public class Appearance {
     public String toString() {
         return "Appearance{" + "type=" + type + ", armor=" + armor + ", helmet=" + helmet + ", chothing=" + chothing + '}';
     }
+
+    public Texture getArmorTexture() {
+        return armorTexture;
+    }
+
+    public void setArmorTexture(Texture armorTexture) {
+        this.armorTexture = armorTexture;
+    }
+
+    public Texture getHelmetTexture() {
+        return helmetTexture;
+    }
+
+    public void setHelmetTexture(Texture helmetTexture) {
+        this.helmetTexture = helmetTexture;
+    }
+
+    public Texture getClothingTexture() {
+        return clothingTexture;
+    }
+
+    public void setClothingTexture(Texture clothingTexture) {
+        this.clothingTexture = clothingTexture;
+    }
+    
+    
 }
