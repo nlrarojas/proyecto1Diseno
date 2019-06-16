@@ -6,13 +6,14 @@
 package domain.character;
 
 import domain.Appearance;
+import domain.IPrototype;
 import domain.Weapon;
 
 /**
  *
  * @author Charlie
  */
-public class Monster implements ICharacterDecorator{
+public class Monster implements ICharacterDecorator,IPrototype{
     ICharacterDecorator component;
 
     public Monster(ICharacterDecorator component) {
@@ -34,5 +35,15 @@ public class Monster implements ICharacterDecorator{
     @Override
     public ICharacterDecorator getComponent() {
         return component.getComponent();
+    }
+    
+     @Override
+    public IPrototype deepClone() {
+        return new Monster((ICharacterDecorator) ((CharacterComponent)component.getComponent()).deepClone());
+    }
+
+    @Override
+    public IPrototype clone() {
+        return new Monster((ICharacterDecorator) ((CharacterComponent)component.getComponent()).clone());
     }
 }

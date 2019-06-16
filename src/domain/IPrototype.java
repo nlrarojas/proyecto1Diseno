@@ -10,6 +10,6 @@ package domain;
  * @author Charlie
  */
 public interface IPrototype {
-    public void clone();
-    public void deepClone();
+    public IPrototype clone();
+    public IPrototype deepClone();
 }

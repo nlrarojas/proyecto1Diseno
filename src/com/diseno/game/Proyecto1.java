@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import domain.generators.CharacterGenerator;
 import view.CreatorUi;
 import view.GameUi;
 import view.MenuUi;
@@ -41,6 +42,8 @@ public class Proyecto1 extends ApplicationAdapter {
                 //set starting ui
                 uiManager.setUi("menu");
                 
+                
+                CharacterGenerator charGenerator = new CharacterGenerator();
                 
 	}
 
