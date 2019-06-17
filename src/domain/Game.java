@@ -7,6 +7,7 @@ import java.io.Serializable;
  * @author Nelson
  */
 public class Game implements Serializable {
+
     protected Army army;
     protected int level;
 

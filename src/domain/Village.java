@@ -5,6 +5,7 @@ package domain;
  * @author Nelson
  */
 public class Village {
+
     protected int[] spaces;
     protected int gold;
     protected int level;
