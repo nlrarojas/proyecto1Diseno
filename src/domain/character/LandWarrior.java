@@ -1,10 +1,12 @@
 package domain.character;
 
+import domain.IPrototype;
+
 /**
  *
  * @author Charlie
  */
-public class LandWarrior implements ICharacterDecorator {
+public class LandWarrior implements ICharacterDecorator, IPrototype {
 
     ICharacterDecorator component;
 
@@ -25,6 +27,16 @@ public class LandWarrior implements ICharacterDecorator {
     @Override
     public ICharacterDecorator getComponent() {
         return component.getComponent();
+    }
+
+    @Override
+    public IPrototype clone() {
+        return new LandWarrior((ICharacterDecorator) ((CharacterComponent) component.getComponent()).clone());
+    }
+
+    @Override
+    public IPrototype deepClone() {
+        return new LandWarrior((ICharacterDecorator) ((CharacterComponent) component.getComponent()).deepClone());
     }
 
 }

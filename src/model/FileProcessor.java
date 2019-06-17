@@ -17,11 +17,18 @@ public class FileProcessor {
         path = fileName;
 
         file = Gdx.files.local(path);
+        if (!file.exists()) {
+            file.writeString(" ", false);
+        }
 
     }
 
     public String readFile() {
         return file.readString();
+    }
+
+    public InputStream readFileStream() {
+        return file.read();
     }
 
     //multiple forms of save function if they are needed

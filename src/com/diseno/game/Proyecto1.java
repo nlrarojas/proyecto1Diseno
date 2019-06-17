@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import domain.generators.CharacterGenerator;
 import view.CreatorUi;
 import view.GameUi;
 import view.MenuUi;
@@ -14,15 +15,15 @@ import view.UiManager;
 
 public class Proyecto1 extends ApplicationAdapter {
 
-    SpriteBatch batch;
-    Texture img;
-    private BitmapFont font;
-    UiManager uiManager;
-
     //constants for screen with and height in pixels
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private float elapsedTime = 0;
+
+    SpriteBatch batch;
+    Texture img;
+    private BitmapFont font;
+    UiManager uiManager;
 
     @Override
     public void create() {
@@ -38,6 +39,8 @@ public class Proyecto1 extends ApplicationAdapter {
         uiManager.addUi("game", new GameUi(uiManager));
         //set starting ui
         uiManager.setUi("menu");
+
+        CharacterGenerator charGenerator = new CharacterGenerator();
 
     }
 
