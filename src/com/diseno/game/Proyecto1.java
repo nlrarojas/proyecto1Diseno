@@ -49,7 +49,7 @@ public class Proyecto1 extends ApplicationAdapter {
         //stores time passed on a variable
         elapsedTime += Gdx.graphics.getDeltaTime();
 
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0.4f, 0.4f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         //batch.draw(img, 0, 0);

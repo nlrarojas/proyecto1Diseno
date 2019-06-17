@@ -55,36 +55,23 @@ public class MenuUi implements IUserInterface {
         commandManager.registerCommand("Weapon", new CommandWeaponCreator());
 
         stage = new Stage();
-        font = new BitmapFont();
+        //load style from skin
+        Skin skin = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
         //font.getData().setScale(2,2);
 
-        //styles -----------------------------------------------------------------------------------
-        //button style
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = UiUtils.createButtonSprite(IDDLE_BUTTON, 200, 60);
-        textButtonStyle.down = UiUtils.createButtonSprite(DOWN_BUTTON, 200, 60);
-        //textButtonStyle.checked = createButtonSprite(CHECKED_BUTTON, 100, 40);
-
-        //text field style
-        TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
-        textFieldStyle.font = font;
-        textFieldStyle.background = UiUtils.createButtonSprite(IDDLE_BUTTON, 100, 40);
-        textFieldStyle.cursor = UiUtils.createButtonSprite(Color.BLACK, 5, 40);
-        textFieldStyle.selection = UiUtils.createRectSprite(SELECTED_TEXT, 10, 10);
-        textFieldStyle.fontColor = Color.BLACK;
+     
 
         //create ui elements -----------------------------------------------------------------------
-        TextButton playButton = new TextButton("Play", textButtonStyle);
+        TextButton playButton = new TextButton("Play", skin);
         playButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 300);
 
-        TextButton createButton = new TextButton("Create", textButtonStyle);
+        TextButton createButton = new TextButton("Create", skin);
         createButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 450);
 
-        TextButton exitButton = new TextButton("Exit", textButtonStyle);
+        TextButton exitButton = new TextButton("Exit", skin);
         exitButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 600);
 
-        TextField textField = new TextField("Data", textFieldStyle);
+        TextField textField = new TextField("Data", skin);
         textField.setPosition(24, 73);
         textField.setSize(200, 40);
 
