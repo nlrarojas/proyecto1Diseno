@@ -8,7 +8,7 @@ import domain.Weapon;
  *
  * @author Nelson
  */
-public class CharacterComponent extends ICharacterComponent implements ICharacterDecorator{
+public class CharacterComponent extends ICharacterComponent implements ICharacterDecorator {
 
     public CharacterComponent(String name, Appearance appearance, int life, int punchesPerTime, int spaces, int appearanceLevel, int cost, Weapon weapon) {
         super(name, appearance, life, punchesPerTime, spaces, appearanceLevel, cost, weapon);
@@ -23,10 +23,10 @@ public class CharacterComponent extends ICharacterComponent implements ICharacte
     public void simulate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public ICharacterDecorator getComponent() {
         return this;
     }
-    
+
 }

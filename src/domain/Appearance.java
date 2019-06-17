@@ -7,17 +7,17 @@ import com.badlogic.gdx.graphics.Texture;
  * @author Nelson
  */
 public class Appearance {
+
     protected String type;
     protected String armor;
     protected String helmet;
     protected String chothing;
-    
+
     //appearence textures
     protected Texture armorTexture;
     protected Texture helmetTexture;
     protected Texture clothingTexture;
 
-    
     public Appearance(String type, String armor, String helmet, String chothing) {
         this.type = type;
         this.armor = armor;
@@ -85,6 +85,5 @@ public class Appearance {
     public void setClothingTexture(Texture clothingTexture) {
         this.clothingTexture = clothingTexture;
     }
-    
-    
+
 }

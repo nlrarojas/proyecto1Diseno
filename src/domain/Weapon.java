@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
  * @author Nelson
  */
 public class Weapon {
+
     protected String name;
     protected int scope;
     protected int damage;
@@ -80,5 +81,5 @@ public class Weapon {
     @Override
     public String toString() {
         return "Weapon{" + "name=" + name + ", scope=" + scope + ", damage=" + damage + ", level=" + level + ", exposureRate=" + exposureRate + ", image=" + imageName + '}';
-    }    
+    }
 }

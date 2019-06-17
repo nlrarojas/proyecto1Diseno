@@ -5,6 +5,7 @@ package domain;
  * @author Nelson
  */
 public class Defense {
+
     protected String name;
     protected Appearance appearance;
     protected int life;
@@ -102,5 +103,5 @@ public class Defense {
     @Override
     public String toString() {
         return "Defense{" + "name=" + name + ", appearance=" + appearance + ", life=" + life + ", punchesPerTime=" + punchesPerTime + ", level=" + level + ", spaces=" + spaces + ", appearanceLevel=" + appearanceLevel + ", range=" + range + ", targetWarriors=" + targetWarriors + '}';
-    }    
+    }
 }

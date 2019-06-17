@@ -13,16 +13,17 @@ public class CareTaker<T> {
     public Memento<T> getMemento(int mementoIndex) {
         return mementos.get(mementoIndex);
     }
-    
-    public void addAtIndex(int index, Memento<T> newMemento){
-        if(index > mementos.size()-1) index = mementos.size()-1;
-        mementos.removeAll(mementos.subList(index, mementos.size()-1));
+
+    public void addAtIndex(int index, Memento<T> newMemento) {
+        if (index > mementos.size() - 1) {
+            index = mementos.size() - 1;
+        }
+        mementos.removeAll(mementos.subList(index, mementos.size() - 1));
         mementos.add(newMemento);
-        
-        
+
     }
-    
-    public int getTop(){
+
+    public int getTop() {
         return mementos.size() - 1;
     }
 

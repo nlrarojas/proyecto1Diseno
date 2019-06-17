@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import com.badlogic.gdx.Gdx;
@@ -14,33 +9,32 @@ import java.io.InputStream;
  * @author Charlie
  */
 public class FileProcessor {
+
     private String path;
     private FileHandle file;
-    
+
     public FileProcessor(String fileName) {
         path = fileName;
-        
+
         file = Gdx.files.local(path);
-        
+
     }
-    
-    public String readFile(){
+
+    public String readFile() {
         return file.readString();
     }
-    
-    
+
     //multiple forms of save function if they are needed
-    public void saveFile(String data){
+    public void saveFile(String data) {
         file.writeString(data, false);
     }
-    
-    public void saveFile(InputStream dataStream){
+
+    public void saveFile(InputStream dataStream) {
         file.write(dataStream, false);
     }
-    
-    public void saveFile(byte[] data){
+
+    public void saveFile(byte[] data) {
         file.writeBytes(data, false);
     }
-    
-    
+
 }

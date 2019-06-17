@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.command;
 
 import domain.IAlmacenable;
@@ -10,23 +5,19 @@ import domain.IAlmacenable;
 /**
  *
  * @author Charlie
- * 
- * TODO
- * -implement execute function
- * -implement save function
+ *
+ * TODO -implement execute function -implement save function
  */
-
-
 public class CommandWeaponCreator implements ICommand, IAlmacenable {
-    
-    
-    public void execute(){
-    
+
+    @Override
+    public void execute() {
+
         throw new UnsupportedOperationException("Not implement command");
     }
-    
-    
-    public void save(){
+
+    @Override
+    public void save() {
         throw new UnsupportedOperationException("Not implement save function");
     }
 }

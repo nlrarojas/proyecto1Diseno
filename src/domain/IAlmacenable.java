@@ -10,5 +10,6 @@ package domain;
  * @author Charlie
  */
 public interface IAlmacenable {
+
     public void save();
 }

@@ -8,7 +8,7 @@ public class Memento<T> {
         this.state = initialState;
     }
 
-    public void setState (T newState) {
+    public void setState(T newState) {
         this.state = newState;
     }
 
