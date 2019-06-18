@@ -1,12 +1,13 @@
 package domain.character;
 
 import domain.IPrototype;
+import java.io.Serializable;
 
 /**
  *
  * @author Charlie
  */
-public class Beast implements ICharacterDecorator, IPrototype {
+public class Beast implements ICharacterDecorator, IPrototype, Serializable {
 
     ICharacterDecorator component;
 
@@ -38,5 +39,12 @@ public class Beast implements ICharacterDecorator, IPrototype {
     public IPrototype clone() {
         return new LandWarrior((ICharacterDecorator) ((CharacterComponent) component.getComponent()).clone());
     }
+
+    @Override
+    public String toString() {
+        return "Beast{" + "component=" + component + '}';
+    }
+    
+    
 
 }

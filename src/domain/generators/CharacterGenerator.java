@@ -1,6 +1,7 @@
 package domain.generators;
 
 import domain.ICharacterComponent;
+import domain.IPrototype;
 import domain.character.CharacterComponent;
 import domain.character.CharacterFactory;
 import domain.character.ICharacterDecorator;
@@ -23,38 +24,29 @@ public class CharacterGenerator {
 
     private static CharacterGenerator instance = null;
     private CharacterFactory factory;
-    private ArrayList<ICharacterComponent> warriors;
-    private ArrayList<ICharacterComponent> beasts;
-    private ArrayList<ICharacterComponent> monsters;
 
+    private ArrayList<ICharacterDecorator> characters;
+    
     //file procesors
-    private FileProcessor warriorFileProcessor;
-    private FileProcessor beastFileProcessor;
-    private FileProcessor monsterFileProcessor;
 
-    public CharacterGenerator() {
+    private FileProcessor characterFileProcessor;
+    
+    private CharacterGenerator() {
         factory = new CharacterFactory();
-        warriorFileProcessor = new FileProcessor("warriors");
-        beastFileProcessor = new FileProcessor("beasts");
-        monsterFileProcessor = new FileProcessor("monsters");
 
-        InputStream warriorStream = warriorFileProcessor.readFileStream();
-        InputStream beastStream = beastFileProcessor.readFileStream();
-        InputStream monsterStream = monsterFileProcessor.readFileStream();
+        characterFileProcessor = new FileProcessor("characters");
+
+        InputStream characterStream = characterFileProcessor.readFileStream();
         //try to load stored data 
         try {
-            ObjectInputStream warriorIStream = new ObjectInputStream(warriorStream);
-            ObjectInputStream beastIStream = new ObjectInputStream(beastStream);
-            ObjectInputStream monsterIStream = new ObjectInputStream(monsterStream);
 
-            warriors = (ArrayList<ICharacterComponent>) warriorIStream.readObject();
-            beasts = (ArrayList< ICharacterComponent>) beastIStream.readObject();
-            monsters = (ArrayList<ICharacterComponent>) monsterIStream.readObject();
+            ObjectInputStream characterIStream = new ObjectInputStream(characterStream);
+            
+            characters = (ArrayList<ICharacterDecorator>) characterIStream.readObject();
 
         } catch (IOException ex) {
             //if failed to read files try to create them
             initializeFiles();
-
             Logger.getLogger(CharacterGenerator.class.getName()).log(Level.SEVERE, null, ex);
 
         } catch (ClassNotFoundException ex) {
@@ -65,30 +57,18 @@ public class CharacterGenerator {
 
     private void initializeFiles() {
         //if files do not exist create them with an empty arraylist
-        warriors = new ArrayList<ICharacterComponent>();
-        beasts = new ArrayList<ICharacterComponent>();
-        monsters = new ArrayList<ICharacterComponent>();
-
+        characters = new ArrayList<ICharacterDecorator>();
         try {
-            ByteArrayOutputStream warriorByteArrayStream = new ByteArrayOutputStream();
-            ByteArrayOutputStream beastByteArrayStream = new ByteArrayOutputStream();
-            ByteArrayOutputStream monsterByteArrayStream = new ByteArrayOutputStream();
 
-            ObjectOutputStream wos = new ObjectOutputStream(warriorByteArrayStream);
-            ObjectOutputStream bos = new ObjectOutputStream(beastByteArrayStream);
-            ObjectOutputStream mos = new ObjectOutputStream(monsterByteArrayStream);
+            ByteArrayOutputStream characterByteArrayStream = new ByteArrayOutputStream();
 
-            wos.writeObject(warriors);
-            bos.writeObject(beasts);
-            mos.writeObject(monsters);
+            ObjectOutputStream cos = new ObjectOutputStream(characterByteArrayStream);
 
-            wos.close();
-            bos.close();
-            mos.close();
+            cos.writeObject(characters);
 
-            warriorFileProcessor.saveFile(warriorByteArrayStream.toByteArray());
-            beastFileProcessor.saveFile(beastByteArrayStream.toByteArray());
-            monsterFileProcessor.saveFile(monsterByteArrayStream.toByteArray());
+            cos.close();
+
+            characterFileProcessor.saveFile(characterByteArrayStream.toByteArray());
         } catch (IOException ex) {
             Logger.getLogger(CharacterGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -99,23 +79,13 @@ public class CharacterGenerator {
 
         return null;
     }
-
-    public void registerWarrior(CharacterComponent newWarrior) {
-        warriors.add(newWarrior);
-        factory.addPrototype(newWarrior.getName(), new LandWarrior(newWarrior));
+    
+    public void registerCharacter(ICharacterDecorator newCharacter){
+        characters.add(newCharacter);
+        factory.addPrototype(((ICharacterComponent)newCharacter.getComponent()).getName(), (IPrototype)newCharacter);
     }
 
-    public void registerBeast(CharacterComponent newBeast) {
-        beasts.add(newBeast);
-        factory.addPrototype(newBeast.getName(), new LandWarrior(newBeast));
-    }
-
-    public void registerMonster(CharacterComponent newMonster) {
-        monsters.add(newMonster);
-        factory.addPrototype(newMonster.getName(), new LandWarrior(newMonster));
-    }
-
-    public CharacterGenerator GetInstance() {
+    public static CharacterGenerator getInstance() {
         if (instance == null) {
             instance = new CharacterGenerator();
         }

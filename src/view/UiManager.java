@@ -1,6 +1,9 @@
 package view;
 
+import domain.Army;
 import java.util.HashMap;
+import model.command.CommandArmyCreator;
+import model.command.CommandManager;
 
 /**
  *
@@ -10,10 +13,13 @@ public class UiManager {
 
     HashMap<String, IUserInterface> availableUi;
     private IUserInterface interfaz;
-
-    public UiManager() {
+    private CommandManager command;
+    
+    public UiManager(CommandManager command) {
 
         availableUi = new HashMap<String, IUserInterface>();
+        this.command = command;
+        
 
     }
 
@@ -35,5 +41,11 @@ public class UiManager {
     public void render() {
         interfaz.render();
     }
+
+    public CommandManager getCommandManager() {
+        return command;
+    }
+    
+    
 
 }

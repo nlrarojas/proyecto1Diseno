@@ -1,6 +1,10 @@
 package model.command;
 
 import domain.IAlmacenable;
+import domain.character.Beast;
+import domain.character.CharacterComponent;
+import domain.character.ICharacterDecorator;
+import domain.generators.CharacterGenerator;
 
 /**
  *
@@ -10,15 +14,28 @@ import domain.IAlmacenable;
  *
  */
 public class CommandCharacterCreater implements ICommand, IAlmacenable {
-
+    
+    private CharacterGenerator generator;
+    private CharacterComponent target;
+    
+    public CommandCharacterCreater() {
+        generator = CharacterGenerator.getInstance();
+        
+    }
+    
+    
+    
     @Override
     public void execute() {
-
-        throw new UnsupportedOperationException("Not implement command");
+        
+    }
+    
+    public void setCharacter(ICharacterDecorator targetCharacter){
+        
     }
 
     @Override
     public void save() {
-        throw new UnsupportedOperationException("Not implement save function");
+        
     }
 }
