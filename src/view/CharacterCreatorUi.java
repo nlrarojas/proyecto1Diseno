@@ -18,14 +18,10 @@ import domain.Appearance;
  *
  * @author Charlie
  */
-public class CreatorUi implements IUserInterface {
+public class CharacterCreatorUi implements IUserInterface {
     public Stage stage;
     private UiManager manager;
-    //constant colors 
-    final Color IDDLE_BUTTON = new Color(0.3f, 0.44f, 0.46f, 1);
-    final Color DOWN_BUTTON = new Color(0.15f, 0.22f, 0.23f, 1);
-    final Color CHECKED_BUTTON = new Color(0.59f, 0.81f, 0.83f, 1);
-    final Color SELECTED_TEXT = new Color(0.79f, 0.91f, 0.93f, 0.5f);
+
     
     //store new character data
     protected String name;
@@ -34,12 +30,13 @@ public class CreatorUi implements IUserInterface {
     protected float attacSpeed = 1.0f;
     protected int level = 1;
     protected int minimunLevel = 1;
+    protected int size = 1;
     protected int price = 5;
     
     
     
     
-    public CreatorUi(UiManager manager) {
+    public CharacterCreatorUi(UiManager manager) {
         this.manager = manager;
         stage = new Stage();
         
@@ -54,6 +51,7 @@ public class CreatorUi implements IUserInterface {
         TextField attackSpeedField = new TextField("", skin);
         TextField levelField = new TextField("", skin);
         TextField minimunLevelField = new TextField("", skin);
+        TextField sizeField = new TextField("", skin);
         TextField priceField = new TextField("", skin);
         TextButton saveButton = new TextButton("Save", skin);
         
@@ -64,6 +62,7 @@ public class CreatorUi implements IUserInterface {
         Label attackSpeedLabel = new Label("Attack Speed: ", skin);
         Label levelLabel = new Label("Level: ", skin);
         Label minimunLevelLabel = new Label("Minimun Level: ", skin);
+        Label sizeLabel = new Label("Size: ", skin);
         Label priceLabel = new Label("Price: ", skin);
         
         //assign widget positions
@@ -74,8 +73,9 @@ public class CreatorUi implements IUserInterface {
         attackSpeedField.setPosition(widgetXpos, UiUtils.HEIGHT -340);
         levelField.setPosition(widgetXpos, UiUtils.HEIGHT -420);
         minimunLevelField.setPosition(widgetXpos, UiUtils.HEIGHT -500);
-        priceField.setPosition(widgetXpos, UiUtils.HEIGHT -580);
-        saveButton.setPosition(UiUtils.WIDHT/2-50, UiUtils.HEIGHT -660);
+        sizeField.setPosition(widgetXpos, UiUtils.HEIGHT -580);
+        priceField.setPosition(widgetXpos, UiUtils.HEIGHT -660);
+        saveButton.setPosition(UiUtils.WIDHT/2-50, UiUtils.HEIGHT -720);
         
         //asing label positions
         int labelXpos = UiUtils.WIDHT/2 - 100;
@@ -85,7 +85,8 @@ public class CreatorUi implements IUserInterface {
         attackSpeedLabel.setPosition(labelXpos, UiUtils.HEIGHT -340);
         levelLabel.setPosition(labelXpos, UiUtils.HEIGHT -420);
         minimunLevelLabel.setPosition(labelXpos, UiUtils.HEIGHT -500);
-        priceLabel.setPosition(labelXpos, UiUtils.HEIGHT -580);
+        sizeLabel.setPosition(labelXpos, UiUtils.HEIGHT -580);
+        priceLabel.setPosition(labelXpos, UiUtils.HEIGHT -660);
         
         //set widget sizes
         nameField.setSize(200, 50);
@@ -94,6 +95,7 @@ public class CreatorUi implements IUserInterface {
         attackSpeedField.setSize(200, 50);
         levelField.setSize(200, 50);
         minimunLevelField.setSize(200, 50);
+        sizeField.setSize(200, 50);
         priceField.setSize(200, 50);
         saveButton.setSize(100, 50);
         nameLabel.setSize(200, 50);
@@ -102,6 +104,7 @@ public class CreatorUi implements IUserInterface {
         attackSpeedLabel.setSize(200, 50);
         levelLabel.setSize(200, 50);
         minimunLevelLabel.setSize(200, 50);
+        sizeLabel.setSize(200, 50);
         priceLabel.setSize(200, 50);
         
         //add elements to stage
@@ -111,6 +114,7 @@ public class CreatorUi implements IUserInterface {
         stage.addActor(attackSpeedField);
         stage.addActor(levelField);
         stage.addActor(minimunLevelField);
+        stage.addActor(sizeField);
         stage.addActor(priceField);
         stage.addActor(saveButton);
         stage.addActor(nameLabel);
@@ -119,6 +123,7 @@ public class CreatorUi implements IUserInterface {
         stage.addActor(attackSpeedLabel);
         stage.addActor(levelLabel);
         stage.addActor(minimunLevelLabel);
+        stage.addActor(sizeLabel);
         stage.addActor(priceLabel);
        
         //set default value
@@ -126,13 +131,14 @@ public class CreatorUi implements IUserInterface {
         attackSpeedField.setText(String.valueOf(attacSpeed));
         levelField.setText(String.valueOf(level));
         minimunLevelField.setText(String.valueOf(minimunLevel));
+        sizeField.setText(String.valueOf(size));
         priceField.setText(String.valueOf(price));
         
         //event handling
         nameField.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                CreatorUi.this.name = ((TextField)actor).getText();
+                CharacterCreatorUi.this.name = ((TextField)actor).getText();
                 //System.out.println("Button Pressed");
             }
         });
@@ -141,11 +147,10 @@ public class CreatorUi implements IUserInterface {
         @Override
         public void keyTyped(TextField textField, char key) {
             String currentText = textField.getText();
-                System.out.println(currentText);
                 if(UiUtils.isInt(currentText)){
-                    CreatorUi.this.healt = Integer.parseInt(currentText);
+                    CharacterCreatorUi.this.healt = Integer.parseInt(currentText);
                 }else{
-                    textField.setText(String.valueOf(CreatorUi.this.healt));
+                    textField.setText(String.valueOf(CharacterCreatorUi.this.healt));
                 }
         }     
         });
@@ -154,11 +159,10 @@ public class CreatorUi implements IUserInterface {
         @Override
         public void keyTyped(TextField textField, char key) {
             String currentText = textField.getText();
-                System.out.println(currentText);
                 if(UiUtils.isFloat(currentText)){
-                    CreatorUi.this.attacSpeed = Float.parseFloat(currentText);
+                    CharacterCreatorUi.this.attacSpeed = Float.parseFloat(currentText);
                 }else{
-                    textField.setText(String.valueOf(CreatorUi.this.attacSpeed));
+                    textField.setText(String.valueOf(CharacterCreatorUi.this.attacSpeed));
 
                 }
         }
@@ -169,11 +173,10 @@ public class CreatorUi implements IUserInterface {
         @Override
         public void keyTyped(TextField textField, char key) {
             String currentText = textField.getText();
-                System.out.println(currentText);
                 if(UiUtils.isInt(currentText)){
-                    CreatorUi.this.level = Integer.parseInt(currentText);
+                    CharacterCreatorUi.this.level = Integer.parseInt(currentText);
                 }else{
-                    textField.setText(String.valueOf(CreatorUi.this.level));
+                    textField.setText(String.valueOf(CharacterCreatorUi.this.level));
                 }
         }     
         });
@@ -182,24 +185,35 @@ public class CreatorUi implements IUserInterface {
         @Override
         public void keyTyped(TextField textField, char key) {
             String currentText = textField.getText();
-                System.out.println(currentText);
                 if(UiUtils.isInt(currentText)){
-                    CreatorUi.this.minimunLevel = Integer.parseInt(currentText);
+                    CharacterCreatorUi.this.minimunLevel = Integer.parseInt(currentText);
                 }else{
-                    textField.setText(String.valueOf(CreatorUi.this.minimunLevel));
+                    textField.setText(String.valueOf(CharacterCreatorUi.this.minimunLevel));
                 }
         }     
         });
+        
+        sizeField.setTextFieldListener(new TextFieldListener() {
+        @Override
+        public void keyTyped(TextField textField, char key) {
+            String currentText = textField.getText();
+                if(UiUtils.isInt(currentText)){
+                    CharacterCreatorUi.this.size = Integer.parseInt(currentText);
+                }else{
+                    textField.setText(String.valueOf(CharacterCreatorUi.this.size));
+                }
+        }     
+        });
+        
         
         priceField.setTextFieldListener(new TextFieldListener() {
         @Override
         public void keyTyped(TextField textField, char key) {
             String currentText = textField.getText();
-                System.out.println(currentText);
                 if(UiUtils.isInt(currentText)){
-                    CreatorUi.this.price = Integer.parseInt(currentText);
+                    CharacterCreatorUi.this.price = Integer.parseInt(currentText);
                 }else{
-                    textField.setText(String.valueOf(CreatorUi.this.price));
+                    textField.setText(String.valueOf(CharacterCreatorUi.this.price));
                 }
         }     
         });
@@ -209,7 +223,7 @@ public class CreatorUi implements IUserInterface {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 //TODO add logic of character saving
                 
-                CreatorUi.this.setUi("menu");
+                CharacterCreatorUi.this.setUi("menu");
                 
             }
         });

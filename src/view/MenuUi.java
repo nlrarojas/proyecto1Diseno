@@ -63,24 +63,33 @@ public class MenuUi implements IUserInterface {
 
         //create ui elements -----------------------------------------------------------------------
         TextButton playButton = new TextButton("Play", skin);
-        playButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 300);
+        playButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 200);
+        playButton.setSize(200, 50);
 
-        TextButton createButton = new TextButton("Create", skin);
-        createButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 450);
-
+        TextButton characterButton = new TextButton("Character", skin);
+        characterButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 300);
+        characterButton.setSize(200, 50);
+        
+        TextButton weaponButton = new TextButton("Weapon", skin);
+        weaponButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 400);
+        weaponButton.setSize(200, 50);
+        
+        TextButton defenseButton = new TextButton("Defense", skin);
+        defenseButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 500);
+        defenseButton.setSize(200, 50);
+        
         TextButton exitButton = new TextButton("Exit", skin);
         exitButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 600);
+        exitButton.setSize(200, 50);
 
-        TextField textField = new TextField("Data", skin);
-        textField.setPosition(24, 73);
-        textField.setSize(200, 40);
 
         //add ui elements to scene ------------------------------------------------------------------
         stage.addActor(playButton);
-        stage.addActor(createButton);
+        stage.addActor(characterButton);
+        stage.addActor(weaponButton);
+        stage.addActor(defenseButton);
         stage.addActor(exitButton);
-        stage.addActor(textField);
-
+        
         //event listerner----------------------------------------------------------------------------
         playButton.addListener(new ChangeListener() {
             @Override
@@ -90,14 +99,30 @@ public class MenuUi implements IUserInterface {
             }
         });
 
-        createButton.addListener(new ChangeListener() {
+        characterButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                MenuUi.this.setUi("creator");
+                MenuUi.this.setUi("character");
                 System.out.println("Going to creator");
             }
         });
-
+        
+        weaponButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                MenuUi.this.setUi("weapon");
+                System.out.println("Going to weapon");
+            }
+        });
+        
+        defenseButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                MenuUi.this.setUi("defense");
+                System.out.println("Going to defense");
+            }
+        });
+        
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
