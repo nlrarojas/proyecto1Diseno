@@ -1,6 +1,8 @@
 package model.command;
 
 import domain.IAlmacenable;
+import domain.Weapon;
+import domain.generators.WeaponGenerator;
 
 /**
  *
@@ -9,15 +11,27 @@ import domain.IAlmacenable;
  * TODO -implement execute function -implement save function
  */
 public class CommandWeaponCreator implements ICommand, IAlmacenable {
-
+    private WeaponGenerator generator;
+    private Weapon target;
+    
+    public CommandWeaponCreator() {
+        generator = WeaponGenerator.GetInstance();
+    }
+    
+    
+       
     @Override
     public void execute() {
-
-        throw new UnsupportedOperationException("Not implement command");
+        generator.registerWeapon(target);
+        
     }
 
     @Override
     public void save() {
-        throw new UnsupportedOperationException("Not implement save function");
+       generator.saveWeapons();
+    }
+    
+    public void setWeapon(Weapon target){
+        this.target = target;
     }
 }

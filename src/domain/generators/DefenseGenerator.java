@@ -94,7 +94,7 @@ public class DefenseGenerator {
             
             System.out.println("SavedDefenseFile");
         } catch (IOException ex) {
-            Logger.getLogger(CharacterGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DefenseGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
