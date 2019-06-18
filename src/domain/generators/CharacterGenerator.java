@@ -64,8 +64,7 @@ public class CharacterGenerator {
     }
 
     public ICharacterDecorator getCharacter(String name) {
-
-        return null;
+        return (ICharacterDecorator)factory.factoryMethod(name);
     }
     
     public void registerCharacter(ICharacterDecorator newCharacter){

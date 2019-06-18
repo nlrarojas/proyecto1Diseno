@@ -1,6 +1,9 @@
 package model.command;
 
+import domain.Defense;
 import domain.IAlmacenable;
+import domain.character.CharacterFactory;
+import domain.generators.DefenseGenerator;
 
 /**
  *
@@ -9,16 +12,33 @@ import domain.IAlmacenable;
  * TODO -implement execute function -implement save function
  */
 public class CommandDefenseCreator implements ICommand, IAlmacenable {
-
+    
+    private DefenseGenerator generator;
+    private Defense target;
+   
+    
+    
+    public CommandDefenseCreator() {
+        generator = DefenseGenerator.GetInstance();
+        
+    }
+    
+    
+    
+    
     @Override
     public void execute() {
-
-        throw new UnsupportedOperationException("Not implement command");
+        generator.registerDefense(target);
+        
     }
 
     @Override
     public void save() {
-        throw new UnsupportedOperationException("Not implement save function");
+        generator.saveDefense();
 
+    }
+    
+    public void setDefense(Defense target){
+        this.target = target;
     }
 }

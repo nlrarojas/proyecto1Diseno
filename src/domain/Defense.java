@@ -1,10 +1,12 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Nelson
  */
-public class Defense {
+public class Defense implements IPrototype,Serializable {
 
     protected String name;
     protected Appearance appearance;
@@ -103,5 +105,15 @@ public class Defense {
     @Override
     public String toString() {
         return "Defense{" + "name=" + name + ", appearance=" + appearance + ", life=" + life + ", punchesPerTime=" + punchesPerTime + ", level=" + level + ", spaces=" + spaces + ", appearanceLevel=" + appearanceLevel + ", range=" + range + ", targetWarriors=" + targetWarriors + '}';
+    }
+
+    @Override
+    public IPrototype clone() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public IPrototype deepClone() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

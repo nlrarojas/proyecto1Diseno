@@ -22,7 +22,7 @@ public class WeaponGenerator {
         throw new UnsupportedOperationException("Not implemented function get weapons");
     }
 
-    public WeaponGenerator GetInstance() {
+    public static WeaponGenerator GetInstance() {
         if (instance == null) {
             instance = new WeaponGenerator();
         }
