@@ -41,6 +41,11 @@ public class DefenseGenerator {
             ObjectInputStream characterIStream = new ObjectInputStream(defenseStream);
             
             defense = (ArrayList<Defense>) characterIStream.readObject();
+            //load prototypes on factory
+            for(Defense def : defense){
+                factory.addPrototype(def.getName(), def);
+            }
+           
             System.out.println(defense.size());
 
         } catch (IOException ex) {
@@ -60,7 +65,15 @@ public class DefenseGenerator {
 
         return (Defense)factory.factoryMethod(defenseName);
     }
-
+    
+    public Defense getRandomDefense(){
+        int randomIndex =  (int) (Math.random() * (defense.size()-0.001));
+        Defense currentDefense = defense.get(randomIndex);
+        
+        return (Defense)factory.factoryMethod(currentDefense.getName());
+        
+    }
+    
     public static DefenseGenerator GetInstance() {
         if (instance == null) {
             instance = new DefenseGenerator();
@@ -97,4 +110,6 @@ public class DefenseGenerator {
             Logger.getLogger(DefenseGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
 }

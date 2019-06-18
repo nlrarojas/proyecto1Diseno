@@ -87,5 +87,6 @@ public class Proyecto1 extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         img.dispose();
+        uiManager.dispose();
     }
 }

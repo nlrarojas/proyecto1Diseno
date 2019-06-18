@@ -6,6 +6,8 @@
 package view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import domain.Appearance;
 import domain.Defense;
+import java.util.ArrayList;
 import model.command.CommandDefenseCreator;
 
 /**
@@ -30,13 +33,15 @@ public class DefenseCreatorUi implements IUserInterface {
     //store new character data
     protected String name;
     protected int healt = 10;
-    protected Appearance appearance ;
+    protected int appearance ;
     protected float attacSpeed = 1.0f;
     protected int level = 1;
     protected int minimunLevel = 1;
     protected int size = 1;
     protected int price = 5;
     protected String target = "";
+    protected FileHandle[] defences;
+    protected String[] defenceNames;
     
     protected final String[] TARGET_TYPES = {"Air","Ground","All"};
     
@@ -44,13 +49,22 @@ public class DefenseCreatorUi implements IUserInterface {
         this.manager = manager;
         stage = new Stage();
         
+        //initialize and load file selector
+        
+        defences = Gdx.files.internal("defense/").list();
+        defenceNames = new String[defences.length];
+        for(int i = 0 ; i < defences.length; i++){
+            defenceNames[i] = defences[i].name();
+        }
+        
+        
         Skin skin = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
         
         
         //ui widgets 
         TextField nameField = new TextField("", skin);        
         SelectBox<String> appearenceSelection=new SelectBox<String>(skin);
-        appearenceSelection.setItems("Dark","Light","Goblin","Shiny");
+        appearenceSelection.setItems(defenceNames);
         TextField healtField = new TextField("", skin);
         TextField attackSpeedField = new TextField("", skin);
         TextField levelField = new TextField("", skin);
@@ -252,13 +266,25 @@ public class DefenseCreatorUi implements IUserInterface {
                 System.out.println(curentSelection);
             }
         });
+        
+        appearenceSelection.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                DefenseCreatorUi.this.appearance = ((SelectBox<String>)actor).getSelectedIndex();
+                //System.out.println("Button Pressed");
+            }
+        });
        
     }
     
     protected void saveDefense(){
         
+        System.out.println("sel ind: " + appearance);
+        System.out.println(defences[appearance]);
         
-        Defense newDefense = new Defense(name, appearance, size, price, level, size, minimunLevel, size,TARGET_TYPES);
+        Appearance newAppearance = new Appearance("defense", defences[appearance].path());
+        
+        Defense newDefense = new Defense(name, newAppearance, size, price, level, size, minimunLevel, size,TARGET_TYPES);
         CommandDefenseCreator command = (CommandDefenseCreator)manager.getCommandManager().getCommand("defense");
         command.setDefense(newDefense);
         command.execute();
@@ -278,5 +304,9 @@ public class DefenseCreatorUi implements IUserInterface {
 
     public void setUi(String name) {
         manager.setUi(name);
+    }
+    
+    public void dispose(){
+        stage.dispose();
     }
 }

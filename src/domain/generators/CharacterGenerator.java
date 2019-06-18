@@ -1,5 +1,6 @@
 package domain.generators;
 
+import domain.Defense;
 import domain.character.ICharacterComponent;
 import domain.IPrototype;
 import domain.character.CharacterComponent;
@@ -35,7 +36,7 @@ public class CharacterGenerator {
         factory = new CharacterFactory();
 
         characterFileProcessor = new FileProcessor("characters");
-
+        
         InputStream characterStream = characterFileProcessor.readFileStream();
         //try to load stored data 
         try {
@@ -43,6 +44,11 @@ public class CharacterGenerator {
             ObjectInputStream characterIStream = new ObjectInputStream(characterStream);
             
             characters = (ArrayList<ICharacterDecorator>) characterIStream.readObject();
+            //load prototypes on factory
+            for(ICharacterDecorator charac : characters){
+                ICharacterComponent comp = (ICharacterComponent)(charac.getComponent());
+                factory.addPrototype(comp.getName(), (IPrototype)charac);
+            }
             System.out.println(characters.size());
 
         } catch (IOException ex) {

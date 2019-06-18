@@ -189,5 +189,7 @@ public class WeaponCreatorUi implements IUserInterface{
     public void setUi(String name) {
         manager.setUi(name);
     }
-    
+    public void dispose(){
+        stage.dispose();
+    }
 }

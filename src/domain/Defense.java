@@ -1,5 +1,6 @@
 package domain;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.io.Serializable;
 
 /**
@@ -7,7 +8,8 @@ import java.io.Serializable;
  * @author Nelson
  */
 public class Defense implements IPrototype,Serializable {
-
+    
+    private static final long serialVersionUID = 6529685095267757690L;
     protected String name;
     protected Appearance appearance;
     protected int life;
@@ -29,7 +31,27 @@ public class Defense implements IPrototype,Serializable {
         this.range = range;
         this.targetWarriors = targetWarriors;
     }
+    
+    public void draw(SpriteBatch batch, int x, int y){
+        appearance.draw(batch,x,y);
+    }
+    
 
+    public void setSize(int width,int height){
+        appearance.setSize(width, height);
+    }
+    
+    public void dispose(){
+        appearance.dispose();
+    }
+    
+    //difficulty added to the game by the defense, is an aproximation
+    public int getDifficulty(){
+        return life + punchesPerTime*range*2 + level*5;
+    }
+    
+    
+    
     public String getName() {
         return name;
     }
