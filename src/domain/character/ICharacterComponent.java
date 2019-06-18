@@ -1,4 +1,9 @@
-package domain;
+package domain.character;
+
+import domain.Appearance;
+import domain.Appearance;
+import domain.Weapon;
+import domain.Weapon;
 
 /**
  *
@@ -24,6 +29,9 @@ public abstract class ICharacterComponent {
         this.appearanceLevel = appearanceLevel;
         this.cost = cost;
         this.weapon = weapon;
+    }
+
+    public ICharacterComponent() {
     }
 
     public String getName() {

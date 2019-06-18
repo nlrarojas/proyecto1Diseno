@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import domain.Appearance;
+import domain.Defense;
+import model.command.CommandDefenseCreator;
 
 /**
  *
@@ -234,13 +236,14 @@ public class DefenseCreatorUi implements IUserInterface {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 //TODO add logic of character saving
+                DefenseCreatorUi.this.saveDefense();
                 DefenseCreatorUi.this.setUi("menu");
                 
             }
         });
         
         //event handling
-        nameField.addListener(new ChangeListener() {
+        targetField.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 int selIndex = ((SelectBox)actor).getSelectedIndex();
@@ -250,6 +253,16 @@ public class DefenseCreatorUi implements IUserInterface {
             }
         });
        
+    }
+    
+    protected void saveDefense(){
+        
+        
+        Defense newDefense = new Defense(name, appearance, size, price, level, size, minimunLevel, size,TARGET_TYPES);
+        CommandDefenseCreator command = (CommandDefenseCreator)manager.getCommandManager().getCommand("defense");
+        command.setDefense(newDefense);
+        command.execute();
+        command.save();
     }
 
     @Override

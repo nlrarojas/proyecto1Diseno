@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import domain.Weapon;
+import model.command.CommandWeaponCreator;
 
 /**
  *
@@ -165,7 +167,13 @@ public class WeaponCreatorUi implements IUserInterface{
     }
     
     
-    
+    protected void saveWeapon(){
+        Weapon newWeapon = new Weapon(name, range, attack, 0, explotion, image);
+        CommandWeaponCreator command =  (CommandWeaponCreator)manager.getCommandManager().getCommand("weapon");
+        command.setWeapon(newWeapon);
+        command.execute();
+        command.save();
+    }
     
     @Override
     public void render() {

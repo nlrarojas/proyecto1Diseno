@@ -13,6 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import domain.Appearance;
+import domain.Weapon;
+import domain.character.CharacterComponent;
+import domain.character.ICharacterDecorator;
+import domain.character.LandWarrior;
+import model.command.CommandCharacterCreater;
 
 /**
  *
@@ -222,7 +227,7 @@ public class CharacterCreatorUi implements IUserInterface {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 //TODO add logic of character saving
-                
+                CharacterCreatorUi.this.createCharacter();
                 CharacterCreatorUi.this.setUi("menu");
                 
             }
@@ -240,7 +245,18 @@ public class CharacterCreatorUi implements IUserInterface {
     public void activate() {
         Gdx.input.setInputProcessor(stage);
     }
-
+    
+    protected void createCharacter(){
+        CommandCharacterCreater commandCharacter = (CommandCharacterCreater)manager.getCommandManager().getCommand("character");
+        Weapon dummyWeapon = new Weapon("wp", 1, 1, 1,100, "badlogic.jpg");
+        CharacterComponent newCharacter= new CharacterComponent(name, appearance, size, price, size, minimunLevel, healt, dummyWeapon);
+        ICharacterDecorator newFullCharacter = new LandWarrior(newCharacter);
+        commandCharacter.setCharacter(newFullCharacter);
+        
+        commandCharacter.execute();
+        commandCharacter.save();
+    }
+    
     public void setUi(String name) {
         manager.setUi(name);
     }

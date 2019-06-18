@@ -8,6 +8,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import domain.generators.CharacterGenerator;
+import domain.generators.DefenseGenerator;
+import model.command.CommandArmyCreator;
+import model.command.CommandCharacterCreater;
+import model.command.CommandDefenseCreator;
+import model.command.CommandManager;
+import model.command.CommandUserCreator;
+import model.command.CommandVillageSettingsManager;
+import model.command.CommandWeaponCreator;
+import model.command.GameManagerCommand;
 import view.CharacterCreatorUi;
 import view.DefenseCreatorUi;
 import view.GameUi;
@@ -34,8 +43,19 @@ public class Proyecto1 extends ApplicationAdapter {
         font = new BitmapFont();
         font.setColor(Color.BLACK);
 
+
+        //create all commands
+        CommandManager command = new CommandManager();
+        command.registerCommand("army", new CommandArmyCreator());
+        command.registerCommand("character", new CommandCharacterCreater());
+        command.registerCommand("defense", new CommandDefenseCreator());
+        command.registerCommand("user", new CommandUserCreator());
+        command.registerCommand("village", new CommandVillageSettingsManager());
+        command.registerCommand("weapon", new CommandWeaponCreator());
+        command.registerCommand("game", new GameManagerCommand());
+        
         //creat ui
-        uiManager = new UiManager();
+        uiManager = new UiManager(command);
         uiManager.addUi("menu", new MenuUi(uiManager));
         uiManager.addUi("character", new CharacterCreatorUi(uiManager));
         uiManager.addUi("game", new GameUi(uiManager));
@@ -44,7 +64,6 @@ public class Proyecto1 extends ApplicationAdapter {
         //set starting ui
         uiManager.setUi("menu");
 
-        CharacterGenerator charGenerator = new CharacterGenerator();
 
     }
 

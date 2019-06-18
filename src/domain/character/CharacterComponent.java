@@ -1,19 +1,25 @@
 package domain.character;
 
 import domain.Appearance;
-import domain.ICharacterComponent;
 import domain.IPrototype;
 import domain.Weapon;
+import java.io.Serializable;
 
 /**
  *
  * @author Nelson
  */
-public class CharacterComponent extends ICharacterComponent implements ICharacterDecorator, IPrototype {
+public class CharacterComponent extends ICharacterComponent implements ICharacterDecorator, IPrototype, Serializable {
 
     public CharacterComponent(String name, Appearance appearance, int life, int punchesPerTime, int spaces, int appearanceLevel, int cost, Weapon weapon) {
         super(name, appearance, life, punchesPerTime, spaces, appearanceLevel, cost, weapon);
     }
+    
+    public CharacterComponent(String name, Appearance appearance, int life, int punchesPerTime, int spaces, int appearanceLevel, int cost, String weapon) {
+        super(name, appearance, life, punchesPerTime, spaces, appearanceLevel, cost, null);
+    }
+    
+    
 
     @Override
     public void draw() {
@@ -32,12 +38,14 @@ public class CharacterComponent extends ICharacterComponent implements ICharacte
 
     @Override
     public IPrototype clone() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new CharacterComponent(name, appearance, life, punchesPerTime, spaces, appearanceLevel, cost, weapon);
     }
 
     @Override
     public IPrototype deepClone() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+
 
 }

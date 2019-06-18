@@ -1,12 +1,13 @@
 package domain.character;
 
 import domain.IPrototype;
+import java.io.Serializable;
 
 /**
  *
  * @author Charlie
  */
-public class LandWarrior implements ICharacterDecorator, IPrototype {
+public class LandWarrior implements ICharacterDecorator, IPrototype, Serializable {
 
     ICharacterDecorator component;
 

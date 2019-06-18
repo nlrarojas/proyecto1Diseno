@@ -1,12 +1,13 @@
 package domain;
 
 import com.badlogic.gdx.graphics.Texture;
+import java.io.Serializable;
 
 /**
  *
  * @author Nelson
  */
-public class Weapon {
+public class Weapon implements Serializable, IPrototype{
 
     protected String name;
     protected int scope;
@@ -81,5 +82,15 @@ public class Weapon {
     @Override
     public String toString() {
         return "Weapon{" + "name=" + name + ", scope=" + scope + ", damage=" + damage + ", level=" + level + ", exposureRate=" + exposureRate + ", image=" + imageName + '}';
+    }
+
+    @Override
+    public IPrototype clone() {
+        return new Weapon(name, scope, damage, level, exposureRate, imageName);
+    }
+
+    @Override
+    public IPrototype deepClone() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
