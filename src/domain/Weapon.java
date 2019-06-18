@@ -1,12 +1,13 @@
 package domain;
 
 import com.badlogic.gdx.graphics.Texture;
+import java.io.Serializable;
 
 /**
  *
  * @author Nelson
  */
-public class Weapon {
+public class Weapon implements Serializable{
 
     protected String name;
     protected int scope;

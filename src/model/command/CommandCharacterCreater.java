@@ -16,7 +16,7 @@ import domain.generators.CharacterGenerator;
 public class CommandCharacterCreater implements ICommand, IAlmacenable {
     
     private CharacterGenerator generator;
-    private CharacterComponent target;
+    private ICharacterDecorator target;
     
     public CommandCharacterCreater() {
         generator = CharacterGenerator.getInstance();
@@ -27,15 +27,15 @@ public class CommandCharacterCreater implements ICommand, IAlmacenable {
     
     @Override
     public void execute() {
-        
+        generator.registerCharacter(target);
     }
     
     public void setCharacter(ICharacterDecorator targetCharacter){
-        
+        target = targetCharacter;
     }
 
     @Override
     public void save() {
-        
+        generator.saveCharacters();
     }
 }

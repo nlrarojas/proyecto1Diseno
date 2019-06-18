@@ -1,5 +1,7 @@
 package domain;
 
+import domain.character.ICharacterComponent;
+
 /**
  *
  * @author Nelson

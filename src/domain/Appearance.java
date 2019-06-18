@@ -1,12 +1,13 @@
 package domain;
 
 import com.badlogic.gdx.graphics.Texture;
+import java.io.Serializable;
 
 /**
  *
  * @author Nelson
  */
-public class Appearance {
+public class Appearance implements Serializable{
 
     protected String type;
     protected String armor;
@@ -85,5 +86,7 @@ public class Appearance {
     public void setClothingTexture(Texture clothingTexture) {
         this.clothingTexture = clothingTexture;
     }
+    
+    
 
 }

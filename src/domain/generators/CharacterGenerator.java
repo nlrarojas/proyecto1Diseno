@@ -1,6 +1,6 @@
 package domain.generators;
 
-import domain.ICharacterComponent;
+import domain.character.ICharacterComponent;
 import domain.IPrototype;
 import domain.character.CharacterComponent;
 import domain.character.CharacterFactory;
@@ -43,6 +43,7 @@ public class CharacterGenerator {
             ObjectInputStream characterIStream = new ObjectInputStream(characterStream);
             
             characters = (ArrayList<ICharacterDecorator>) characterIStream.readObject();
+            System.out.println(characters.size());
 
         } catch (IOException ex) {
             //if failed to read files try to create them
@@ -58,20 +59,7 @@ public class CharacterGenerator {
     private void initializeFiles() {
         //if files do not exist create them with an empty arraylist
         characters = new ArrayList<ICharacterDecorator>();
-        try {
-
-            ByteArrayOutputStream characterByteArrayStream = new ByteArrayOutputStream();
-
-            ObjectOutputStream cos = new ObjectOutputStream(characterByteArrayStream);
-
-            cos.writeObject(characters);
-
-            cos.close();
-
-            characterFileProcessor.saveFile(characterByteArrayStream.toByteArray());
-        } catch (IOException ex) {
-            Logger.getLogger(CharacterGenerator.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        saveCharacters();
 
     }
 
@@ -91,5 +79,24 @@ public class CharacterGenerator {
         }
 
         return instance;
+    }
+    
+    public void saveCharacters(){
+        try {
+
+            ByteArrayOutputStream characterByteArrayStream = new ByteArrayOutputStream();
+
+            ObjectOutputStream cos = new ObjectOutputStream(characterByteArrayStream);
+
+            cos.writeObject(characters);
+
+            cos.close();
+
+            characterFileProcessor.saveFile(characterByteArrayStream.toByteArray());
+            
+            System.out.println("SavedFile");
+        } catch (IOException ex) {
+            Logger.getLogger(CharacterGenerator.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

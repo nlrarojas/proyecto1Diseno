@@ -11,6 +11,12 @@ public class CharacterFactory {
 
     private HashMap<String, IPrototype> prototypes;
 
+    public CharacterFactory() {
+        prototypes = new HashMap<String, IPrototype>();
+    }
+    
+    
+
     public void addPrototype(String name, IPrototype newPrototype) {
         prototypes.put(name, newPrototype);
     }
