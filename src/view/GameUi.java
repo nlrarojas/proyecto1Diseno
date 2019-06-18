@@ -52,7 +52,6 @@ public class GameUi implements IUserInterface {
         commandManager.registerCommand("Weapon", new CommandWeaponCreator());
 
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
         font = new BitmapFont();
 
         //styles -----------------------------------------------------------------------------------
@@ -92,9 +91,14 @@ public class GameUi implements IUserInterface {
         });
 
         textField.addListener(new ChangeListener() {
+            String previousValue = "";
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println(((TextField) actor).getText());
+                String currentText = ((TextField)actor).getText();
+                if(UiUtils.isFloat(currentText)){
+                    previousValue = currentText;
+                    
+                }
             }
         });
     }

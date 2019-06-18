@@ -8,10 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import domain.generators.CharacterGenerator;
-import view.CreatorUi;
+import view.CharacterCreatorUi;
+import view.DefenseCreatorUi;
 import view.GameUi;
 import view.MenuUi;
 import view.UiManager;
+import view.WeaponCreatorUi;
 
 public class Proyecto1 extends ApplicationAdapter {
 
@@ -35,8 +37,10 @@ public class Proyecto1 extends ApplicationAdapter {
         //creat ui
         uiManager = new UiManager();
         uiManager.addUi("menu", new MenuUi(uiManager));
-        uiManager.addUi("creator", new CreatorUi(uiManager));
+        uiManager.addUi("character", new CharacterCreatorUi(uiManager));
         uiManager.addUi("game", new GameUi(uiManager));
+        uiManager.addUi("weapon", new WeaponCreatorUi(uiManager));
+        uiManager.addUi("defense", new DefenseCreatorUi(uiManager));
         //set starting ui
         uiManager.setUi("menu");
 
@@ -49,7 +53,7 @@ public class Proyecto1 extends ApplicationAdapter {
         //stores time passed on a variable
         elapsedTime += Gdx.graphics.getDeltaTime();
 
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0.4f, 0.4f, 0.4f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         //batch.draw(img, 0, 0);

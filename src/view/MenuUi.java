@@ -55,45 +55,41 @@ public class MenuUi implements IUserInterface {
         commandManager.registerCommand("Weapon", new CommandWeaponCreator());
 
         stage = new Stage();
-        font = new BitmapFont();
+        //load style from skin
+        Skin skin = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
         //font.getData().setScale(2,2);
 
-        //styles -----------------------------------------------------------------------------------
-        //button style
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = UiUtils.createButtonSprite(IDDLE_BUTTON, 200, 60);
-        textButtonStyle.down = UiUtils.createButtonSprite(DOWN_BUTTON, 200, 60);
-        //textButtonStyle.checked = createButtonSprite(CHECKED_BUTTON, 100, 40);
-
-        //text field style
-        TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
-        textFieldStyle.font = font;
-        textFieldStyle.background = UiUtils.createButtonSprite(IDDLE_BUTTON, 100, 40);
-        textFieldStyle.cursor = UiUtils.createButtonSprite(Color.BLACK, 5, 40);
-        textFieldStyle.selection = UiUtils.createRectSprite(SELECTED_TEXT, 10, 10);
-        textFieldStyle.fontColor = Color.BLACK;
+     
 
         //create ui elements -----------------------------------------------------------------------
-        TextButton playButton = new TextButton("Play", textButtonStyle);
-        playButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 300);
+        TextButton playButton = new TextButton("Play", skin);
+        playButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 200);
+        playButton.setSize(200, 50);
 
-        TextButton createButton = new TextButton("Create", textButtonStyle);
-        createButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 450);
-
-        TextButton exitButton = new TextButton("Exit", textButtonStyle);
+        TextButton characterButton = new TextButton("Character", skin);
+        characterButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 300);
+        characterButton.setSize(200, 50);
+        
+        TextButton weaponButton = new TextButton("Weapon", skin);
+        weaponButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 400);
+        weaponButton.setSize(200, 50);
+        
+        TextButton defenseButton = new TextButton("Defense", skin);
+        defenseButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 500);
+        defenseButton.setSize(200, 50);
+        
+        TextButton exitButton = new TextButton("Exit", skin);
         exitButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 600);
+        exitButton.setSize(200, 50);
 
-        TextField textField = new TextField("Data", textFieldStyle);
-        textField.setPosition(24, 73);
-        textField.setSize(200, 40);
 
         //add ui elements to scene ------------------------------------------------------------------
         stage.addActor(playButton);
-        stage.addActor(createButton);
+        stage.addActor(characterButton);
+        stage.addActor(weaponButton);
+        stage.addActor(defenseButton);
         stage.addActor(exitButton);
-        stage.addActor(textField);
-
+        
         //event listerner----------------------------------------------------------------------------
         playButton.addListener(new ChangeListener() {
             @Override
@@ -103,14 +99,30 @@ public class MenuUi implements IUserInterface {
             }
         });
 
-        createButton.addListener(new ChangeListener() {
+        characterButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                MenuUi.this.setUi("creator");
+                MenuUi.this.setUi("character");
                 System.out.println("Going to creator");
             }
         });
-
+        
+        weaponButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                MenuUi.this.setUi("weapon");
+                System.out.println("Going to weapon");
+            }
+        });
+        
+        defenseButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                MenuUi.this.setUi("defense");
+                System.out.println("Going to defense");
+            }
+        });
+        
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
