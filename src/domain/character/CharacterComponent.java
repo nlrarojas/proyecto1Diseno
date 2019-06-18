@@ -38,7 +38,7 @@ public class CharacterComponent extends ICharacterComponent implements ICharacte
 
     @Override
     public IPrototype clone() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new CharacterComponent(name, appearance, life, punchesPerTime, spaces, appearanceLevel, cost, weapon);
     }
 
     @Override

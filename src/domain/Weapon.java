@@ -86,7 +86,7 @@ public class Weapon implements Serializable, IPrototype{
 
     @Override
     public IPrototype clone() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new Weapon(name, scope, damage, level, exposureRate, imageName);
     }
 
     @Override

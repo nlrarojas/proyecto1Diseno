@@ -23,7 +23,7 @@ public class CharacterFactory {
 
     public IPrototype factoryMethod(String name) {
         if (prototypes.containsKey(name)) {
-            return prototypes.get(name).deepClone();
+            return prototypes.get(name).clone();
         }
         return null;
 

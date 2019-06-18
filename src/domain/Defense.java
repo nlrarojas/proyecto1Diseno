@@ -109,7 +109,7 @@ public class Defense implements IPrototype,Serializable {
 
     @Override
     public IPrototype clone() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new Defense(name, appearance, life, punchesPerTime, level, spaces, appearanceLevel, range, targetWarriors);
     }
 
     @Override
