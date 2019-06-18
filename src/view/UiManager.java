@@ -2,6 +2,7 @@ package view;
 
 import domain.Army;
 import java.util.HashMap;
+import java.util.Iterator;
 import model.command.CommandArmyCreator;
 import model.command.CommandManager;
 
@@ -46,6 +47,12 @@ public class UiManager {
         return command;
     }
     
-    
+    public void dispose(){
+        Iterator it = availableUi.entrySet().iterator();
+        while (it.hasNext()) {
+            IUserInterface currentUi = (IUserInterface)it.next();
+            currentUi.dispose();
+        }
+    }
 
 }

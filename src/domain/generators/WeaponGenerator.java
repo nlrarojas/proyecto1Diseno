@@ -29,7 +29,7 @@ public class WeaponGenerator {
 
     private WeaponGenerator() {
         factory = new CharacterFactory();
-        weaponFileProcessor = new FileProcessor("defenses");
+        weaponFileProcessor = new FileProcessor("weapons");
         InputStream weaponStream = weaponFileProcessor.readFileStream();
         
         //try to load stored data 
@@ -38,6 +38,10 @@ public class WeaponGenerator {
             ObjectInputStream WeaponIStream = new ObjectInputStream(weaponStream);
             
             weapons = (ArrayList<Weapon>) WeaponIStream.readObject();
+            //load prototypes on factory
+            for(Weapon wp : weapons){
+                factory.addPrototype(wp.getName(), wp);
+            }
             System.out.println(weapons.size());
 
         } catch (IOException ex) {

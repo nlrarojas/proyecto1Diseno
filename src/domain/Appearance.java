@@ -1,6 +1,11 @@
 package domain;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
@@ -8,23 +13,38 @@ import java.io.Serializable;
  * @author Nelson
  */
 public class Appearance implements Serializable{
-
+    private static final long serialVersionUID = 7529637895267716690L;
     protected String type;
-    protected String armor;
-    protected String helmet;
-    protected String chothing;
+    protected String path;
+    protected transient Sprite appearanceSprite;
+    protected transient Texture appearanceTexture;
 
-    //appearence textures
-    protected Texture armorTexture;
-    protected Texture helmetTexture;
-    protected Texture clothingTexture;
-
-    public Appearance(String type, String armor, String helmet, String chothing) {
+    public Appearance(String type, String path) {
         this.type = type;
-        this.armor = armor;
-        this.helmet = helmet;
-        this.chothing = chothing;
+        this.path = path;
+        this.appearanceTexture = new Texture(Gdx.files.absolute(path));
+        this.appearanceSprite = new Sprite(appearanceTexture);
     }
+
+    public Appearance(String type, String path,Texture appearanceTexture) {
+        this.type = type;
+        this.appearanceTexture = appearanceTexture;
+        appearanceSprite = new Sprite(appearanceTexture); 
+    }
+    
+    public void setSize(int width,int height){
+        appearanceSprite.setSize(width, height);
+    }
+    
+    public void draw(SpriteBatch batch, int x, int y){
+        appearanceSprite.setPosition(x, y);
+        appearanceSprite.draw(batch);
+    }
+    
+    public void dispose(){
+        appearanceTexture.dispose();
+    }
+    
 
     public String getType() {
         return type;
@@ -34,59 +54,30 @@ public class Appearance implements Serializable{
         this.type = type;
     }
 
-    public String getArmor() {
-        return armor;
-    }
-
-    public void setArmor(String armor) {
-        this.armor = armor;
-    }
-
-    public String getHelmet() {
-        return helmet;
-    }
-
-    public void setHelmet(String helmet) {
-        this.helmet = helmet;
-    }
-
-    public String getChothing() {
-        return chothing;
-    }
-
-    public void setChothing(String chothing) {
-        this.chothing = chothing;
-    }
-
     @Override
     public String toString() {
-        return "Appearance{" + "type=" + type + ", armor=" + armor + ", helmet=" + helmet + ", chothing=" + chothing + '}';
+        return "Appearance{" + "type=" + type + ", path=" + path + ", appearanceTexture=" + appearanceTexture + '}';
     }
-
-    public Texture getArmorTexture() {
-        return armorTexture;
-    }
-
-    public void setArmorTexture(Texture armorTexture) {
-        this.armorTexture = armorTexture;
-    }
-
-    public Texture getHelmetTexture() {
-        return helmetTexture;
-    }
-
-    public void setHelmetTexture(Texture helmetTexture) {
-        this.helmetTexture = helmetTexture;
-    }
-
-    public Texture getClothingTexture() {
-        return clothingTexture;
-    }
-
-    public void setClothingTexture(Texture clothingTexture) {
-        this.clothingTexture = clothingTexture;
-    }
+     private void writeObject(ObjectOutputStream oos) throws Exception 
+    { 
+        // to perform default serialization of Account object. 
+        oos.defaultWriteObject(); 
+  
+        // epwd (encrypted password) 
+        String savepath = path; 
+  
+        // writing encrypted password to the file 
+        oos.writeObject(savepath); 
+    } 
+     private void readObject(ObjectInputStream ois) throws Exception 
+    { 
+        // performing default deserialization of Account object 
+        ois.defaultReadObject(); 
+        //load texture and create sprite after deserialization
+        String savepath = (String)ois.readObject(); 
+        System.out.println("path: " + savepath);
+        this.appearanceTexture = new Texture(Gdx.files.absolute(savepath));
+        this.appearanceSprite = new Sprite(appearanceTexture);
+    } 
     
-    
-
 }

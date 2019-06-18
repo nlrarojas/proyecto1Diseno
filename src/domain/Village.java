@@ -1,33 +1,78 @@
 package domain;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 /**
  *
  * @author Nelson
  */
 public class Village {
-
-    protected int[] spaces;
+    
+    //square size of village
+    protected int size;
     protected int gold;
     protected int level;
     protected int life;
-    protected Defense[] defenses;
-
-    public Village(int[] spaces, int gold, int level, Defense[] defenses) {
-        this.spaces = spaces;
+    protected VillageTile[][] tiles;
+    private Texture tileTexture;
+    private Texture cityTexture; 
+    private Sprite citySprite;
+    private SpriteBatch villageBatch;
+    
+    public Village(int size, int gold, int level) {
+        this.size = size;
         this.gold = gold;
         this.level = level;
-        this.defenses = defenses;
         this.life = 100;
+        this.tiles = new VillageTile[size][size];
+        this.tileTexture = new Texture(Gdx.files.internal("village/tile.jpg"));
+        this.villageBatch = new SpriteBatch();
+        cityTexture = new Texture(Gdx.files.internal("village/city.png"));
+        citySprite = new Sprite(cityTexture);
+        citySprite.setSize(size, level);
+        
+        int tileSize = 620/size;
+        int initialX = (1280 - 720)/2;
+        int initialY = (720 - 620)/2;
+        citySprite.setSize(tileSize*2, tileSize*2);
+        citySprite.setPosition(initialX+(size/2-1)*tileSize,initialY+(size/2-1)*tileSize);
+        
+        //initialize each tile
+        for(int x = 0; x < size; x++){
+            for(int y = 0; y < size; y++){
+                //initialize tile values
+                VillageTile currentTile = new VillageTile(tileTexture);
+                currentTile.setPosition(initialX + tileSize*x, initialY+ tileSize*y);
+                currentTile.setsize(tileSize);
+                //store new tile
+                tiles[x][y] = currentTile;
+            }
+        }
     }
-
-    public int[] getSpaces() {
-        return spaces;
+    
+    public void addRandomdefense(Defense newDefense){
+        //use cordinates avoiding borders
+        int newX =  1 + (int)(Math.random()*(size-3));
+        int newY = 1 + (int)(Math.random()*(size-3));
+        
+        //if is over town hall reasign building
+        while(isOverTownHall(newX, newY)){
+            newX =  1 + (int)(Math.random()*(size-3));
+            newY = 1 + (int)(Math.random()*(size-3));
+        }
+        
+        
+        System.out.println("x: " + newX + " ,y: "+ newY);
+        tiles[newX][newY].addDefence(newDefense);
     }
-
-    public void setSpaces(int[] spaces) {
-        this.spaces = spaces;
+    
+    private boolean isOverTownHall(int x, int y){
+        return (x >= size/2-1 && x <= size/2) && ( y >=  size/2-1 &&  y <= size/2);
     }
-
+    
     public int getGold() {
         return gold;
     }
@@ -52,16 +97,28 @@ public class Village {
         this.life = life;
     }
 
-    public Defense[] getDefenses() {
-        return defenses;
-    }
-
-    public void setDefenses(Defense[] defenses) {
-        this.defenses = defenses;
-    }
-
     @Override
     public String toString() {
-        return "Village{" + "spaces=" + spaces + ", gold=" + gold + ", level=" + level + ", life=" + life + ", defenses=" + defenses + '}';
+        return "Village{" + "size=" + size + ", gold=" + gold + ", level=" + level + ", life=" + life + ", tiles=" + tiles + '}';
+    }
+
+    public void dispose(){  
+        tileTexture.dispose();
+        villageBatch.dispose();
+    }
+    
+    public void draw(){
+        villageBatch.begin();
+        drawTiles();
+        citySprite.draw(villageBatch);
+        villageBatch.end();
+    }
+    
+    private void drawTiles(){
+        for(int x = 0; x < size; x++){
+            for(int y = 0; y < size; y++){
+                tiles[x][y].draw(villageBatch);
+            }
+        }
     }
 }
