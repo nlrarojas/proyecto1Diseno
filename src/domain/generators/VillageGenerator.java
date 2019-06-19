@@ -6,6 +6,7 @@
 package domain.generators;
 
 import domain.Defense;
+import domain.Game;
 import domain.Village;
 
 /**
@@ -14,7 +15,7 @@ import domain.Village;
  */
 public class VillageGenerator {
     
-    public Village generateVillage(int difficulty){
+    public Village generateVillage(int difficulty, Game game){
         int newLevel = difficulty/150;
         Village newVillage = new Village(12, 2000, newLevel);
         DefenseGenerator generator = DefenseGenerator.GetInstance();
@@ -23,6 +24,7 @@ public class VillageGenerator {
             Defense currentDefense = generator.getRandomDefense();
             difficulty -= currentDefense.getDifficulty();
             newVillage.addRandomdefense(currentDefense);
+            currentDefense.addObserver(game);
             System.out.println(difficulty);
         }
         

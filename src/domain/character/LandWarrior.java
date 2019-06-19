@@ -1,7 +1,9 @@
 package domain.character;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import domain.ICharacterObserver;
 import domain.IPrototype;
+import domain.Village;
 import java.io.Serializable;
 
 /**
@@ -9,7 +11,7 @@ import java.io.Serializable;
  * @author Charlie
  */
 public class LandWarrior implements ICharacterDecorator, IPrototype, Serializable {
-
+    private static final long serialVersionUID = 7214685093337757690L;
     ICharacterDecorator component;
 
     public LandWarrior(ICharacterDecorator component) {
@@ -22,8 +24,12 @@ public class LandWarrior implements ICharacterDecorator, IPrototype, Serializabl
     }
 
     @Override
-    public void simulate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void simulate(double deltaTime,Village vil,int xCoord, int yCoord) {
+        ((CharacterComponent)component.getComponent()).simulate(deltaTime,vil,xCoord,yCoord);
+    }
+    @Override
+    public void attack(int damage) {
+        component.attack(damage);
     }
 
     @Override
@@ -44,6 +50,19 @@ public class LandWarrior implements ICharacterDecorator, IPrototype, Serializabl
         CharacterComponent character = (CharacterComponent)component.getComponent();
         character.setSize(width, height);
     }
-    
+     @Override
+    public void notifyObservers() {
+        component.notifyObservers();
+    }
+
+    @Override
+    public void addObserver(ICharacterObserver observer) {
+        component.addObserver(observer);
+    }
+
+    @Override
+    public void removeObserver(ICharacterObserver observer) {
+        component.removeObserver(observer);
+    }
 
 }
