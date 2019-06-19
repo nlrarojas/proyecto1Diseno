@@ -6,6 +6,7 @@
 package view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -27,22 +28,34 @@ public class WeaponCreatorUi implements IUserInterface{
     
     
     protected String name   = "";
-    protected String image  = "";
+    protected int appearance  = 0;
     protected int range     = 1;
     protected int attack    = 1;
     protected int explotion = 0;
+    protected FileHandle[] weapons;
+    protected String[] weaponNames;
      //store new weapon data
 
     public WeaponCreatorUi(UiManager manager) {
         this.manager = manager;
         stage = new Stage();
         
+        //initialize and load file selector
+        weapons = Gdx.files.internal("weapon/").list();
+        weaponNames = new String[weapons.length];
+        for(int i = 0 ; i < weapons.length; i++){
+            weaponNames[i] = weapons[i].name();
+        }
+        
+        
+        
         Skin skin = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
         
         
         //ui widgets 
         TextField nameField = new TextField("", skin);
-        TextField imageField = new TextField("", skin);
+        SelectBox<String> appearenceSelection=new SelectBox<String>(skin);
+        appearenceSelection.setItems(weaponNames);
         TextField attackField = new TextField("", skin);
         TextField explotionField = new TextField("", skin);
         TextField rangeField = new TextField("", skin);
@@ -58,7 +71,7 @@ public class WeaponCreatorUi implements IUserInterface{
         //assign widget positions
         int widgetXpos = UiUtils.WIDHT/2 + 50;
         nameField.setPosition(widgetXpos, UiUtils.HEIGHT -200);
-        imageField.setPosition(widgetXpos, UiUtils.HEIGHT -280);
+        appearenceSelection.setPosition(widgetXpos, UiUtils.HEIGHT -280);
         attackField.setPosition(widgetXpos, UiUtils.HEIGHT -360);
         explotionField.setPosition(widgetXpos, UiUtils.HEIGHT -440);
         rangeField.setPosition(widgetXpos, UiUtils.HEIGHT -520);
@@ -74,7 +87,7 @@ public class WeaponCreatorUi implements IUserInterface{
         
         //set widget sizes
         nameField.setSize(200, 50);
-        imageField.setSize(200, 50);
+        appearenceSelection.setSize(200, 50);
         attackField.setSize(200, 50);
         explotionField.setSize(200, 50);
         rangeField.setSize(200, 50);
@@ -87,7 +100,7 @@ public class WeaponCreatorUi implements IUserInterface{
         
         //add elements to stage
         stage.addActor(nameField);
-        stage.addActor(imageField);
+        stage.addActor(appearenceSelection);
         stage.addActor(attackField);
         stage.addActor(explotionField);
         stage.addActor(rangeField);
@@ -100,20 +113,12 @@ public class WeaponCreatorUi implements IUserInterface{
         
         //set default value
         nameField.setText(String.valueOf(name));
-        imageField.setText(String.valueOf(image));
         attackField.setText(String.valueOf(attack));
         explotionField.setText(String.valueOf(explotion));
         rangeField.setText(String.valueOf(range));
         
         //event handling
         nameField.setTextFieldListener(new TextField.TextFieldListener() {
-        @Override
-        public void keyTyped(TextField textField, char key) {
-            String currentText = textField.getText();
-            WeaponCreatorUi.this.name = currentText;    
-        }     
-        });
-        imageField.setTextFieldListener(new TextField.TextFieldListener() {
         @Override
         public void keyTyped(TextField textField, char key) {
             String currentText = textField.getText();
@@ -164,11 +169,22 @@ public class WeaponCreatorUi implements IUserInterface{
             }
         });
         
+        
+        appearenceSelection.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                WeaponCreatorUi.this.appearance = ((SelectBox<String>)actor).getSelectedIndex();
+                //System.out.println("Button Pressed");
+            }
+        });
+        
     }
     
     
     protected void saveWeapon(){
-        Weapon newWeapon = new Weapon(name, range, attack, 0, explotion, image);
+        //load weapon path
+        String fullImagePath = weapons[appearance].path();
+        Weapon newWeapon = new Weapon(name, range, attack, 0, explotion, fullImagePath);
         CommandWeaponCreator command =  (CommandWeaponCreator)manager.getCommandManager().getCommand("weapon");
         command.setWeapon(newWeapon);
         command.execute();

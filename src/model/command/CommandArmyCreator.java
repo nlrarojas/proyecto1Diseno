@@ -23,6 +23,7 @@ public class CommandArmyCreator implements ICommand {
         army.updateLevel(newLevel);
     }
     
+    
     public void setLevel(int newLevel){
         this.newLevel = newLevel;
     }

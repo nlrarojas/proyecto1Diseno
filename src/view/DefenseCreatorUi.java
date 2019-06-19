@@ -50,7 +50,6 @@ public class DefenseCreatorUi implements IUserInterface {
         stage = new Stage();
         
         //initialize and load file selector
-        
         defences = Gdx.files.internal("defense/").list();
         defenceNames = new String[defences.length];
         for(int i = 0 ; i < defences.length; i++){

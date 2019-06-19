@@ -1,6 +1,7 @@
 package view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -31,12 +32,15 @@ public class CharacterCreatorUi implements IUserInterface {
     //store new character data
     protected String name;
     protected int healt = 10;
-    protected Appearance appearance ;
+    protected int appearance ;
     protected int attacSpeed = 1;
     protected int level = 1;
     protected int minimunLevel = 1;
     protected int size = 1;
     protected int price = 5;
+    protected FileHandle[] characters;
+    protected String[] characterNames;
+    
     
     
     
@@ -45,13 +49,20 @@ public class CharacterCreatorUi implements IUserInterface {
         this.manager = manager;
         stage = new Stage();
         
+        //initialize and load file selector
+        characters = Gdx.files.internal("character/").list();
+        characterNames = new String[characters.length];
+        for(int i = 0 ; i < characters.length; i++){
+            characterNames[i] = characters[i].name();
+        }
+        
         Skin skin = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
         
         
         //ui widgets 
         TextField nameField = new TextField("", skin);        
         SelectBox<String> appearenceSelection=new SelectBox<String>(skin);
-        appearenceSelection.setItems("Dark","Light","Goblin","Shiny");
+        appearenceSelection.setItems(characterNames);
         TextField healtField = new TextField("", skin);
         TextField attackSpeedField = new TextField("", skin);
         TextField levelField = new TextField("", skin);
@@ -232,6 +243,15 @@ public class CharacterCreatorUi implements IUserInterface {
                 
             }
         });
+        
+        appearenceSelection.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                CharacterCreatorUi.this.appearance = ((SelectBox<String>)actor).getSelectedIndex();
+                //System.out.println("Button Pressed");
+            }
+        });
+       
        
     }
 
@@ -249,7 +269,8 @@ public class CharacterCreatorUi implements IUserInterface {
     protected void createCharacter(){
         CommandCharacterCreater commandCharacter = (CommandCharacterCreater)manager.getCommandManager().getCommand("character");
         Weapon dummyWeapon = new Weapon("wp", 1, 1, 1,100, "badlogic.jpg");
-        CharacterComponent newCharacter= new CharacterComponent(name, appearance, healt, attacSpeed, size, minimunLevel, healt, dummyWeapon);
+        Appearance newAppearance = new Appearance("defense", characters[appearance].path());
+        CharacterComponent newCharacter= new CharacterComponent(name, newAppearance, healt, attacSpeed, size, minimunLevel, healt, dummyWeapon);
         ICharacterDecorator newFullCharacter = new LandWarrior(newCharacter);
         commandCharacter.setCharacter(newFullCharacter);
         
