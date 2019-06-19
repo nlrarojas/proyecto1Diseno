@@ -18,6 +18,7 @@ import domain.Weapon;
 import domain.character.CharacterComponent;
 import domain.character.ICharacterDecorator;
 import domain.character.LandWarrior;
+import domain.generators.WeaponGenerator;
 import model.command.CommandCharacterCreater;
 
 /**
@@ -38,8 +39,12 @@ public class CharacterCreatorUi implements IUserInterface {
     protected int minimunLevel = 1;
     protected int size = 1;
     protected int price = 5;
+    protected int weapon = 0;
+    private SelectBox<String> weaponSelection;
     protected FileHandle[] characters;
     protected String[] characterNames;
+    String[] weaponNames;
+    
     
     
     
@@ -57,7 +62,8 @@ public class CharacterCreatorUi implements IUserInterface {
         }
         
         Skin skin = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
-        
+        WeaponGenerator generator = WeaponGenerator.GetInstance();
+        weaponNames = generator.getWeaponNames();
         
         //ui widgets 
         TextField nameField = new TextField("", skin);        
@@ -69,6 +75,8 @@ public class CharacterCreatorUi implements IUserInterface {
         TextField minimunLevelField = new TextField("", skin);
         TextField sizeField = new TextField("", skin);
         TextField priceField = new TextField("", skin);
+        weaponSelection = new SelectBox<String>(skin);
+        weaponSelection.setItems(weaponNames);
         TextButton saveButton = new TextButton("Save", skin);
         
         //ui labels
@@ -80,6 +88,7 @@ public class CharacterCreatorUi implements IUserInterface {
         Label minimunLevelLabel = new Label("Minimun Level: ", skin);
         Label sizeLabel = new Label("Size: ", skin);
         Label priceLabel = new Label("Price: ", skin);
+        Label weaponLabel = new Label("Weapon: ", skin);
         
         //assign widget positions
         int widgetXpos = UiUtils.WIDHT/2 + 50;
@@ -91,7 +100,8 @@ public class CharacterCreatorUi implements IUserInterface {
         minimunLevelField.setPosition(widgetXpos, UiUtils.HEIGHT -500);
         sizeField.setPosition(widgetXpos, UiUtils.HEIGHT -580);
         priceField.setPosition(widgetXpos, UiUtils.HEIGHT -660);
-        saveButton.setPosition(UiUtils.WIDHT/2-50, UiUtils.HEIGHT -720);
+        weaponSelection.setPosition(widgetXpos,  UiUtils.HEIGHT -720);
+        saveButton.setPosition(0, 0);
         
         //asing label positions
         int labelXpos = UiUtils.WIDHT/2 - 100;
@@ -103,6 +113,7 @@ public class CharacterCreatorUi implements IUserInterface {
         minimunLevelLabel.setPosition(labelXpos, UiUtils.HEIGHT -500);
         sizeLabel.setPosition(labelXpos, UiUtils.HEIGHT -580);
         priceLabel.setPosition(labelXpos, UiUtils.HEIGHT -660);
+        weaponLabel.setPosition(labelXpos, UiUtils.HEIGHT -720);
         
         //set widget sizes
         nameField.setSize(200, 50);
@@ -113,6 +124,7 @@ public class CharacterCreatorUi implements IUserInterface {
         minimunLevelField.setSize(200, 50);
         sizeField.setSize(200, 50);
         priceField.setSize(200, 50);
+        weaponSelection.setSize(200, 50);
         saveButton.setSize(100, 50);
         nameLabel.setSize(200, 50);
         healtLabel.setSize(200, 50);
@@ -122,6 +134,8 @@ public class CharacterCreatorUi implements IUserInterface {
         minimunLevelLabel.setSize(200, 50);
         sizeLabel.setSize(200, 50);
         priceLabel.setSize(200, 50);
+        weaponLabel.setSize(200, 50);
+        
         
         //add elements to stage
         stage.addActor(nameField);
@@ -132,6 +146,7 @@ public class CharacterCreatorUi implements IUserInterface {
         stage.addActor(minimunLevelField);
         stage.addActor(sizeField);
         stage.addActor(priceField);
+        stage.addActor(weaponSelection);
         stage.addActor(saveButton);
         stage.addActor(nameLabel);
         stage.addActor(healtLabel);
@@ -141,6 +156,7 @@ public class CharacterCreatorUi implements IUserInterface {
         stage.addActor(minimunLevelLabel);
         stage.addActor(sizeLabel);
         stage.addActor(priceLabel);
+        stage.addActor(weaponLabel);
        
         //set default value
         healtField.setText(String.valueOf(healt));
@@ -252,6 +268,13 @@ public class CharacterCreatorUi implements IUserInterface {
             }
         });
        
+        weaponSelection.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                CharacterCreatorUi.this.weapon = ((SelectBox<String>)actor).getSelectedIndex();
+                //System.out.println("Button Pressed");
+            }
+        });
        
     }
 
@@ -264,12 +287,15 @@ public class CharacterCreatorUi implements IUserInterface {
     @Override
     public void activate() {
         Gdx.input.setInputProcessor(stage);
+        WeaponGenerator generator = WeaponGenerator.GetInstance();
+        weaponNames = generator.getWeaponNames();
+        weaponSelection.setItems(weaponNames);
     }
     
     protected void createCharacter(){
         CommandCharacterCreater commandCharacter = (CommandCharacterCreater)manager.getCommandManager().getCommand("character");
-        Weapon dummyWeapon = new Weapon("wp", 1, 1, 1,100, "badlogic.jpg");
-        Appearance newAppearance = new Appearance("defense", characters[appearance].path());
+        Weapon dummyWeapon = WeaponGenerator.GetInstance().getWeapon(weaponNames[weapon]);
+        Appearance newAppearance = new Appearance("character", characters[appearance].path());
         CharacterComponent newCharacter= new CharacterComponent(name, newAppearance, healt, attacSpeed, size, minimunLevel, healt, dummyWeapon);
         ICharacterDecorator newFullCharacter = new LandWarrior(newCharacter);
         commandCharacter.setCharacter(newFullCharacter);

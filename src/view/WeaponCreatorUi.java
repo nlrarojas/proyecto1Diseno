@@ -162,8 +162,7 @@ public class WeaponCreatorUi implements IUserInterface{
         saveButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                //TODO add logic of character saving
-                
+                WeaponCreatorUi.this.saveWeapon();
                 WeaponCreatorUi.this.setUi("menu");
                 
             }
