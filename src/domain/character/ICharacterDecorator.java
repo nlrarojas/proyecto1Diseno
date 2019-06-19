@@ -1,10 +1,12 @@
 package domain.character;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Nelson
  */
-public interface ICharacterDecorator {
+public interface ICharacterDecorator extends Serializable{
 
     public abstract void draw();
 

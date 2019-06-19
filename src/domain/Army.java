@@ -2,14 +2,15 @@ package domain;
 
 import domain.character.CharacterComponent;
 import domain.character.ICharacterDecorator;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Nelson
  */
-public class Army {
-
+public class Army implements Serializable{
+    private static final long serialVersionUID = 7529635555000426690L;
     protected int numberOfSoldiers;
     protected int actualNumberOfSoldiers;
     protected ArrayList<ICharacterDecorator> soldiers;

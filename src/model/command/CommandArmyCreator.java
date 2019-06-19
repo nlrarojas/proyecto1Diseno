@@ -13,8 +13,8 @@ public class CommandArmyCreator implements ICommand {
     int newLevel = 1;
     
     
-    public CommandArmyCreator() {
-        army = new Army(1);
+    public CommandArmyCreator(Army army) {
+        this.army = army;
         
     }
     
@@ -30,6 +30,10 @@ public class CommandArmyCreator implements ICommand {
     
     public Army getArmy(){
         return army;
+    }
+
+    public void setArmy(Army army) {
+        this.army = army;
     }
     
     

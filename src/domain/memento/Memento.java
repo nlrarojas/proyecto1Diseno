@@ -1,6 +1,8 @@
 package domain.memento;
 
-public class Memento<T> {
+import java.io.Serializable;
+
+public class Memento<T> implements Serializable{
 
     private T state;
 

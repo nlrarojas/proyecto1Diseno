@@ -1,6 +1,10 @@
 package model.command;
 
+import domain.Game;
 import domain.IAlmacenable;
+import java.io.InputStream;
+import model.FileProcessor;
+import model.GameStorage;
 
 /**
  *
@@ -9,15 +13,38 @@ import domain.IAlmacenable;
  * TODO -implement execute function -implement save function
  */
 public class GameManagerCommand implements ICommand, IAlmacenable {
-
+    GameStorage storage;
+    Game game;
+    
+    public GameManagerCommand(Game game) {
+        storage = new GameStorage("gamedata");
+        this.game = game;
+        storage.setCurrentGame(game);
+    }
+    
+    
+    
     @Override
     public void execute() {
-        throw new UnsupportedOperationException("Not implement command");
-
+        storage.setCurrentGame(game);
+        
+        
+    }
+    
+    public void setGame(Game game){
+        this.game = game;
     }
 
     @Override
     public void save() {
-        throw new UnsupportedOperationException("Not implement save function");
+        storage.saveGame();
+        storage.saveGames();
+        
     }
+
+    public GameStorage getStorage() {
+        return storage;
+    }
+    
+    
 }

@@ -1,12 +1,18 @@
 package domain.memento;
 
-public class Originator<T> {
+import java.io.Serializable;
+
+public class Originator<T> implements Serializable{
 
     private T state;
 
     public void set(T newState) {
         this.state = newState;
     }
+    
+   public T get(){
+       return this.state;
+   }
 
     public Memento saveToMemento() {
         return new Memento(this.state);

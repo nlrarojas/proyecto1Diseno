@@ -4,23 +4,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  *
  * @author Nelson
  */
-public class Village {
-    
+public class Village implements Serializable{
+    private static final long serialVersionUID = 7529637895000426690L;
     //square size of village
     protected int size;
     protected int gold;
     protected int level;
     protected int life;
     protected VillageTile[][] tiles;
-    private Texture tileTexture;
-    private Texture cityTexture; 
-    private Sprite citySprite;
-    private SpriteBatch villageBatch;
+    private transient Texture tileTexture;
+    private transient Texture cityTexture; 
+    private transient Sprite citySprite;
+    private transient SpriteBatch villageBatch;
     
     public Village(int size, int gold, int level) {
         this.size = size;
@@ -28,11 +31,15 @@ public class Village {
         this.level = level;
         this.life = 100;
         this.tiles = new VillageTile[size][size];
+        
+        InitializeTiles();
+    }
+    
+    private void InitializeTiles(){
         this.tileTexture = new Texture(Gdx.files.internal("village/tile.jpg"));
         this.villageBatch = new SpriteBatch();
         cityTexture = new Texture(Gdx.files.internal("village/city.png"));
         citySprite = new Sprite(cityTexture);
-        citySprite.setSize(size, level);
         
         int tileSize = 620/size;
         int initialX = (1280 - 720)/2;
@@ -121,4 +128,32 @@ public class Village {
             }
         }
     }
+    
+
+     private void readObject(ObjectInputStream ois) throws Exception 
+    { 
+        // performing default deserialization of Account object 
+        ois.defaultReadObject(); 
+        
+        //do all image loading
+        this.tileTexture = new Texture(Gdx.files.internal("village/tile.jpg"));
+        this.villageBatch = new SpriteBatch();
+        cityTexture = new Texture(Gdx.files.internal("village/city.png"));
+        citySprite = new Sprite(cityTexture);
+        
+        System.out.println(tiles);
+        
+        int tileSize = 620/size;
+        int initialX = (1280 - 720)/2;
+        int initialY = (720 - 620)/2;
+        citySprite.setSize(tileSize*2, tileSize*2);
+        citySprite.setPosition(initialX+(size/2-1)*tileSize,initialY+(size/2-1)*tileSize);
+        for(int x = 0; x < size;x++){
+            for (int y = 0; y < size; y++) {
+                tiles[x][y].setTexture(tileTexture);
+                tiles[x][y].setPosition(initialX + tileSize*x, initialY+ tileSize*y);
+                tiles[x][y].setsize(tileSize);
+            }
+        }
+    } 
 }

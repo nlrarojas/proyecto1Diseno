@@ -273,13 +273,29 @@ public class DefenseCreatorUi implements IUserInterface {
                 //System.out.println("Button Pressed");
             }
         });
+        
+        //add back button
+        TextButton backButton = new TextButton("Back", skin);
+        backButton.setSize(100, 50);
+        backButton.setPosition(0, 0);
+        
+        
+        stage.addActor(backButton);
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                //TODO add logic of character saving
+                DefenseCreatorUi.this.setUi("menu");
+                
+            }
+        });
        
     }
     
     protected void saveDefense(){
         
-        System.out.println("sel ind: " + appearance);
-        System.out.println(defences[appearance]);
+        //System.out.println("sel ind: " + appearance);
+        //System.out.println(defences[appearance]);
         
         Appearance newAppearance = new Appearance("defense", defences[appearance].path());
         
