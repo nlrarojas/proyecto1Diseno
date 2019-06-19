@@ -91,10 +91,20 @@ public class WeaponGenerator {
 
             weaponFileProcessor.saveFile(weaponByteArrayStream.toByteArray());
             
-            System.out.println("SaveWeaponFile");
+            System.out.println("SavedWeaponFile");
         } catch (IOException ex) {
             Logger.getLogger(WeaponGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public String[] getWeaponNames(){
+        
+        String[] res = new String[weapons.size()];
+        for (int i = 0; i < weapons.size(); i++) {
+            res[i] = weapons.get(i).getName();
+        } 
+        return res;
+        
     }
       
 }

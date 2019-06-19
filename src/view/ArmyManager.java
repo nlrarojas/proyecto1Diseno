@@ -119,9 +119,27 @@ public class ArmyManager implements IUserInterface{
         table.setFillParent(true);
         table.add(scroller).fill().expand();
         
+        
         stage.addActor(table);
         
+        //add back button
+        TextButton backButton = new TextButton("Back", skin);
+        backButton.setSize(200, 50);
         
+        
+        stage.addActor(backButton);
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                //TODO add logic of character saving
+                ArmyManager.this.setUi("menu");
+                
+            }
+        });
+    }
+    
+    public void setUi(String name) {
+        manager.setUi(name);
     }
     
 }

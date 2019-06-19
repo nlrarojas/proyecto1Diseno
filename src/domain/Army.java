@@ -26,7 +26,7 @@ public class Army {
     
     public boolean addCharacter(ICharacterDecorator newCharacter){
         CharacterComponent comp = (CharacterComponent)newCharacter.getComponent();
-        if(numberOfSoldiers > actualNumberOfSoldiers + comp.getSpaces()){
+        if(numberOfSoldiers >= actualNumberOfSoldiers + comp.getSpaces()){
             actualNumberOfSoldiers += comp.getSpaces();
             soldiers.add(newCharacter);
             return true;
