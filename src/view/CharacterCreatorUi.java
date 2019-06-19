@@ -32,7 +32,7 @@ public class CharacterCreatorUi implements IUserInterface {
     protected String name;
     protected int healt = 10;
     protected Appearance appearance ;
-    protected float attacSpeed = 1.0f;
+    protected int attacSpeed = 1;
     protected int level = 1;
     protected int minimunLevel = 1;
     protected int size = 1;
@@ -140,12 +140,12 @@ public class CharacterCreatorUi implements IUserInterface {
         priceField.setText(String.valueOf(price));
         
         //event handling
-        nameField.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                CharacterCreatorUi.this.name = ((TextField)actor).getText();
-                //System.out.println("Button Pressed");
-            }
+        nameField.setTextFieldListener(new TextFieldListener() {
+        @Override
+        public void keyTyped(TextField textField, char key) {
+            String currentText = textField.getText();
+            CharacterCreatorUi.this.name = currentText;
+        }     
         });
         
         healtField.setTextFieldListener(new TextFieldListener() {
@@ -164,8 +164,8 @@ public class CharacterCreatorUi implements IUserInterface {
         @Override
         public void keyTyped(TextField textField, char key) {
             String currentText = textField.getText();
-                if(UiUtils.isFloat(currentText)){
-                    CharacterCreatorUi.this.attacSpeed = Float.parseFloat(currentText);
+                if(UiUtils.isInt(currentText)){
+                    CharacterCreatorUi.this.attacSpeed = Integer.parseInt(currentText);
                 }else{
                     textField.setText(String.valueOf(CharacterCreatorUi.this.attacSpeed));
 
@@ -249,7 +249,7 @@ public class CharacterCreatorUi implements IUserInterface {
     protected void createCharacter(){
         CommandCharacterCreater commandCharacter = (CommandCharacterCreater)manager.getCommandManager().getCommand("character");
         Weapon dummyWeapon = new Weapon("wp", 1, 1, 1,100, "badlogic.jpg");
-        CharacterComponent newCharacter= new CharacterComponent(name, appearance, size, price, size, minimunLevel, healt, dummyWeapon);
+        CharacterComponent newCharacter= new CharacterComponent(name, appearance, healt, attacSpeed, size, minimunLevel, healt, dummyWeapon);
         ICharacterDecorator newFullCharacter = new LandWarrior(newCharacter);
         commandCharacter.setCharacter(newFullCharacter);
         

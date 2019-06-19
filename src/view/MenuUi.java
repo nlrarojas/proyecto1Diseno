@@ -78,8 +78,12 @@ public class MenuUi implements IUserInterface {
         defenseButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 500);
         defenseButton.setSize(200, 50);
         
+        TextButton armyButton = new TextButton("Army", skin);
+        armyButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 600);
+        armyButton.setSize(200, 50);
+        
         TextButton exitButton = new TextButton("Exit", skin);
-        exitButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 600);
+        exitButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 700);
         exitButton.setSize(200, 50);
 
 
@@ -88,6 +92,7 @@ public class MenuUi implements IUserInterface {
         stage.addActor(characterButton);
         stage.addActor(weaponButton);
         stage.addActor(defenseButton);
+        stage.addActor(armyButton);
         stage.addActor(exitButton);
         
         //event listerner----------------------------------------------------------------------------
@@ -120,6 +125,14 @@ public class MenuUi implements IUserInterface {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 MenuUi.this.setUi("defense");
                 System.out.println("Going to defense");
+            }
+        });
+        
+        armyButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                MenuUi.this.setUi("army");
+                System.out.println("Going to army");
             }
         });
         

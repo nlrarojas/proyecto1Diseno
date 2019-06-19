@@ -15,7 +15,7 @@ public class Weapon implements Serializable, IPrototype{
     protected int level;
     protected int exposureRate;
     protected String imageName;
-    protected Texture texture;
+    protected transient Texture texture;
 
     public Weapon(String name, int scope, int damage, int level, int exposureRate, String image) {
         this.name = name;

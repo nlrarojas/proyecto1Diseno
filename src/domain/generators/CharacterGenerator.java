@@ -1,7 +1,6 @@
 package domain.generators;
 
 import domain.Defense;
-import domain.character.ICharacterComponent;
 import domain.IPrototype;
 import domain.character.CharacterComponent;
 import domain.character.CharacterFactory;
@@ -46,7 +45,7 @@ public class CharacterGenerator {
             characters = (ArrayList<ICharacterDecorator>) characterIStream.readObject();
             //load prototypes on factory
             for(ICharacterDecorator charac : characters){
-                ICharacterComponent comp = (ICharacterComponent)(charac.getComponent());
+                CharacterComponent comp = (CharacterComponent)(charac.getComponent());
                 factory.addPrototype(comp.getName(), (IPrototype)charac);
             }
             System.out.println(characters.size());
@@ -60,6 +59,10 @@ public class CharacterGenerator {
 
             Logger.getLogger(CharacterGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public ArrayList<ICharacterDecorator> getCharacters(){
+        return characters;
     }
 
     private void initializeFiles() {
@@ -75,7 +78,7 @@ public class CharacterGenerator {
     
     public void registerCharacter(ICharacterDecorator newCharacter){
         characters.add(newCharacter);
-        factory.addPrototype(((ICharacterComponent)newCharacter.getComponent()).getName(), (IPrototype)newCharacter);
+        factory.addPrototype(((CharacterComponent)newCharacter.getComponent()).getName(), (IPrototype)newCharacter);
     }
 
     public static CharacterGenerator getInstance() {
