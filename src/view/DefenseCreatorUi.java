@@ -39,6 +39,7 @@ public class DefenseCreatorUi implements IUserInterface {
     protected int minimunLevel = 1;
     protected int size = 1;
     protected int price = 5;
+    protected int range = 2;
     protected String target = "";
     protected FileHandle[] defences;
     protected String[] defenceNames;
@@ -70,6 +71,7 @@ public class DefenseCreatorUi implements IUserInterface {
         TextField minimunLevelField = new TextField("", skin);
         TextField sizeField = new TextField("", skin);
         TextField priceField = new TextField("", skin);
+        TextField rangeField = new TextField("", skin);
         SelectBox<String> targetField = new SelectBox<String>(skin);
         targetField.setItems("Air","Ground","All");
         TextButton saveButton = new TextButton("Save", skin);
@@ -84,7 +86,7 @@ public class DefenseCreatorUi implements IUserInterface {
         Label sizeLabel = new Label("Size: ", skin);
         Label priceLabel = new Label("Price: ", skin);
         Label targetLabel = new Label("Target: ", skin);
-        
+        Label rangeLabel = new Label("Range: ", skin);
         //assign widget positions
         int widgetXpos = UiUtils.WIDHT/2 + 50;
         nameField.setPosition(widgetXpos, UiUtils.HEIGHT -100);
@@ -96,7 +98,8 @@ public class DefenseCreatorUi implements IUserInterface {
         sizeField.setPosition(widgetXpos, UiUtils.HEIGHT -480);
         priceField.setPosition(widgetXpos, UiUtils.HEIGHT -540);
         targetField.setPosition(widgetXpos, UiUtils.HEIGHT -600);
-        saveButton.setPosition(UiUtils.WIDHT/2-50, UiUtils.HEIGHT -720);
+        rangeField.setPosition(widgetXpos, UiUtils.HEIGHT -660);
+        saveButton.setPosition(100, UiUtils.HEIGHT -720);
         
         //asing label positions
         int labelXpos = UiUtils.WIDHT/2 - 100;
@@ -109,6 +112,7 @@ public class DefenseCreatorUi implements IUserInterface {
         sizeLabel.setPosition(labelXpos, UiUtils.HEIGHT -480);
         priceLabel.setPosition(labelXpos, UiUtils.HEIGHT -540);
         targetLabel.setPosition(labelXpos, UiUtils.HEIGHT -600);
+        rangeLabel.setPosition(labelXpos, UiUtils.HEIGHT -660);
         
         //set widget sizes
         nameField.setSize(200, 50);
@@ -119,6 +123,7 @@ public class DefenseCreatorUi implements IUserInterface {
         minimunLevelField.setSize(200, 50);
         sizeField.setSize(200, 50);
         priceField.setSize(200, 50);
+        rangeField.setSize(200, 50);
         targetField.setSize(200, 50);
         saveButton.setSize(100, 50);
         nameLabel.setSize(200, 50);
@@ -130,6 +135,7 @@ public class DefenseCreatorUi implements IUserInterface {
         sizeLabel.setSize(200, 50);
         priceLabel.setSize(200, 50);
         targetLabel.setSize(200, 50);
+        rangeLabel.setSize(200, 50);
         
         //add elements to stage
         stage.addActor(nameField);
@@ -141,6 +147,7 @@ public class DefenseCreatorUi implements IUserInterface {
         stage.addActor(sizeField);
         stage.addActor(priceField);
         stage.addActor(targetField);
+        stage.addActor(rangeField);
         stage.addActor(saveButton);
         stage.addActor(nameLabel);
         stage.addActor(healtLabel);
@@ -151,7 +158,7 @@ public class DefenseCreatorUi implements IUserInterface {
         stage.addActor(sizeLabel);
         stage.addActor(priceLabel);
         stage.addActor(targetLabel);
-        
+        stage.addActor(rangeLabel);
        
         //set default value
         healtField.setText(String.valueOf(healt));
@@ -160,7 +167,7 @@ public class DefenseCreatorUi implements IUserInterface {
         minimunLevelField.setText(String.valueOf(minimunLevel));
         sizeField.setText(String.valueOf(size));
         priceField.setText(String.valueOf(price));
-        
+        rangeField.setText(String.valueOf(range));
         //event handling
         nameField.addListener(new ChangeListener() {
             @Override
@@ -245,6 +252,18 @@ public class DefenseCreatorUi implements IUserInterface {
         }     
         });
         
+        rangeField.setTextFieldListener(new TextField.TextFieldListener() {
+        @Override
+        public void keyTyped(TextField textField, char key) {
+            String currentText = textField.getText();
+                if(UiUtils.isInt(currentText)){
+                    DefenseCreatorUi.this.range = Integer.parseInt(currentText);
+                }else{
+                    textField.setText(String.valueOf(DefenseCreatorUi.this.range));
+                }
+        }     
+        });
+        
         saveButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
@@ -299,7 +318,7 @@ public class DefenseCreatorUi implements IUserInterface {
         
         Appearance newAppearance = new Appearance("defense", defences[appearance].path());
         
-        Defense newDefense = new Defense(name, newAppearance, size, price, level, size, minimunLevel, size,TARGET_TYPES);
+        Defense newDefense = new Defense(name, newAppearance, size, price, level, size, minimunLevel, range,TARGET_TYPES);
         CommandDefenseCreator command = (CommandDefenseCreator)manager.getCommandManager().getCommand("defense");
         command.setDefense(newDefense);
         command.execute();

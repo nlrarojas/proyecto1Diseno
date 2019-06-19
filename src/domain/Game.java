@@ -1,5 +1,6 @@
 package domain;
 
+import domain.character.ICharacterDecorator;
 import domain.generators.VillageGenerator;
 import java.io.Serializable;
 
@@ -7,8 +8,8 @@ import java.io.Serializable;
  *
  * @author Nelson
  */
-public class Game implements Serializable {
-
+public class Game implements Serializable,IDefenseObserver,ICharacterObserver {
+    private static final long serialVersionUID = 7529635555000999321L;
     protected Army army;
     protected int level;
     protected Village village;
@@ -57,7 +58,8 @@ public class Game implements Serializable {
     public void generateVillage(){
         int diff = 100*level;
         VillageGenerator generator = new VillageGenerator();
-        village = generator.generateVillage(diff);
+        village = generator.generateVillage(diff,this);
+        
     }
     
     
@@ -73,6 +75,17 @@ public class Game implements Serializable {
     public void simulate(double deltaTime){
         if(village != null)
         village.simulate(deltaTime);
+    }
+
+    //on defense death
+    @Override
+    public void notify(Defense def) {
+        System.out.println("notified tower!!!");
+    }
+
+    @Override
+    public void notify(ICharacterDecorator character) {
+        System.out.println("notified char!!!");
     }
     
     

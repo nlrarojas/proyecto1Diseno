@@ -2,12 +2,13 @@ package domain;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
  * @author Nelson
  */
-public class Defense implements IPrototype,Serializable {
+public class Defense implements IPrototype,Serializable, IObservableDefense {
     
     private static final long serialVersionUID = 6529685095267757690L;
     protected String name;
@@ -19,6 +20,8 @@ public class Defense implements IPrototype,Serializable {
     protected int appearanceLevel;
     protected int range;
     protected String[] targetWarriors;
+    protected transient ArrayList<IDefenseObserver> observers = new ArrayList<IDefenseObserver>();
+    private double elapsedTime = 0;
 
     public Defense(String name, Appearance appearance, int life, int punchesPerTime, int level, int spaces, int appearanceLevel, int range, String[] targetWarriors) {
         this.name = name;
@@ -140,6 +143,51 @@ public class Defense implements IPrototype,Serializable {
     }
     
     public void simulate(double deltaTime,Village vill,int xCoord, int yCoord){
+        elapsedTime += deltaTime;
         
+        if(elapsedTime >= 1){
+            //System.out.println("simulating deff");
+            elapsedTime = 0;
+            boolean finished = false;
+            for(int x = -range; x <= range; x++){
+                for(int y = -range; y < range; y++){
+                    int dist = (int)Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
+                    if(vill.validTile(x+xCoord, y+yCoord) && vill.isUnit(x+xCoord, y+yCoord) && dist <= range){
+                        vill.visitTile(x + xCoord, y + yCoord).attackUnit(punchesPerTime);
+                        
+                        System.out.println("x: "+ (x) + " y: "+ (y) );
+                        finished = true;
+                        break;
+                    }
+                }
+                if(finished)break;
+            }
+            }
+        
+    }
+    
+    public void attack(int damage){
+        life -= damage;
+        if(life <= 0){
+            notifyObservers();
+        }
+        
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(IDefenseObserver obs : observers){
+            obs.notify(this);
+        }
+    }
+
+    @Override
+    public void addObserver(IDefenseObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(IDefenseObserver observer) {
+        observers.remove(this);
     }
 }

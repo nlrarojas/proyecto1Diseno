@@ -89,6 +89,7 @@ public class VillageTile implements Serializable, Aggregate {
         tileSpirte.draw(batch);
         for(Defense def: defences){
             def.draw(batch,x,y);
+            //System.out.println("draw deff");
         }
         
         for(ICharacterDecorator character: characters){
@@ -103,10 +104,14 @@ public class VillageTile implements Serializable, Aggregate {
 
     void simulate(double deltaTime,Village vill,int xCoord, int yCoord) {
         elapsedTime += deltaTime;
-
-
-        for(int i = defences.size()-1 ; i > 0; i--){
-            defences.get(i).simulate(deltaTime,vill, xCoord, yCoord);
+        //System.out.println(defences.size());
+        
+        
+        for(int i = defences.size()-1 ; i >= 0; i--){
+            if(i < defences.size()){
+                defences.get(i).simulate(deltaTime,vill, xCoord, yCoord);
+                //System.out.println("def simulation");
+            }
         }
         for(int i = characters.size()-1 ; i >= 0; i--){
             //System.out.println("charsim");
@@ -123,4 +128,29 @@ public class VillageTile implements Serializable, Aggregate {
         return defences.size() > 0;
     }
     
+    public boolean hasCharacter(){
+        return characters.size() > 0;
+    }
+    
+    
+    public void attackTile(int damage){
+        if(defences.size() > 0){
+        defences.get(0).attack(damage);
+            if(defences.get(0).getLife() <= 0){
+                defences.remove(0);
+            }
+        }
+        //System.out.println("attacked: " + damage);
+    }
+    
+    public void attackUnit(int damage){
+        //System.out.println("attacked: " + hasCharacter());
+        if(characters.size() > 0){
+        characters.get(0).attack(damage);
+            if(((CharacterComponent)characters.get(0).getComponent()).getLife() <= 0){
+                characters.remove(0);
+            }
+        }
+        
+    }
 }

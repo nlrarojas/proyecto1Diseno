@@ -2,11 +2,13 @@ package domain.character;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import domain.Appearance;
+import domain.ICharacterObserver;
 import domain.IPrototype;
 import domain.Village;
 import domain.VillageTile;
 import domain.Weapon;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,6 +25,7 @@ public class CharacterComponent implements ICharacterDecorator, IPrototype {
     protected int cost;
     protected Weapon weapon;
     protected double elasepTime = 0;
+    protected ArrayList<ICharacterObserver> observers = new ArrayList<ICharacterObserver>() ;
     
     public CharacterComponent(String name, Appearance appearance, int life, int punchesPerTime, int spaces, int appearanceLevel, int cost, Weapon weapon) {
         
@@ -61,7 +64,36 @@ public class CharacterComponent implements ICharacterDecorator, IPrototype {
             newTile.addCharacter(this);
             //System.out.println("moving... " + newX + ", "+newY);
         }
+        
+        //attack routine
+        int range = weapon.getScope();
+        boolean finished = false;
+        for(int x = -range; x <= range; x++){
+            for(int y = -range; y < range; y++){
+                int dist = (int)Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
+                if(vil.validTile(x+xCoord, y+yCoord) && ! vil.freeTile(x+xCoord, y+yCoord) && dist <= range){
+                    vil.visitTile(x + xCoord, y + yCoord).attackTile(punchesPerTime*weapon.getDamage());
+                    //System.out.println("x: "+ (x) + " y: "+ (y) + "--" + weapon);
+                    finished = true;
+                    break;
+                }else if(vil.validTile(x+xCoord, y+yCoord) && vil.isOverTownHall(x+xCoord, y+yCoord) && dist <= range){
+                    vil.attackTheVillage(punchesPerTime*weapon.getDamage());
+                    finished = true;
+                    break;
+                }
+            }
+            if(finished)break;
         }
+        }
+       
+        
+        
+    }
+    
+    @Override
+    public void attack(int damage) {
+        life -= damage;
+        System.out.println("attacked char: " + life);    
     }
 
     @Override
@@ -152,6 +184,22 @@ public class CharacterComponent implements ICharacterDecorator, IPrototype {
     
     public void setSize(int width, int height){
         appearance.setSize(width, height);
+    }
+    @Override
+    public void notifyObservers() {
+        for(ICharacterObserver obs : observers){
+            obs.notify(this);
+        }
+    }
+
+    @Override
+    public void addObserver(ICharacterObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(ICharacterObserver observer) {
+        observers.remove(observer);
     }
     
 }
