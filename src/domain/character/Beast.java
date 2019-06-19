@@ -1,5 +1,6 @@
 package domain.character;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import domain.IPrototype;
 import java.io.Serializable;
 
@@ -21,8 +22,8 @@ public class Beast implements ICharacterDecorator, IPrototype, Serializable {
     }
 
     @Override
-    public void draw() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void draw(SpriteBatch batch,int x ,int y) {
+        component.draw(batch, x, y);
     }
 
     @Override
@@ -45,6 +46,11 @@ public class Beast implements ICharacterDecorator, IPrototype, Serializable {
         return "Beast{" + "component=" + component + '}';
     }
     
+    
+    public void setSize(int width, int height){
+        CharacterComponent character = (CharacterComponent)component.getComponent();
+        character.setSize(width, height);
+    }
     
 
 }

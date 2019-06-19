@@ -72,4 +72,12 @@ public class Army implements Serializable{
     public void updateLevel(int level){
         numberOfSoldiers = upLevel(level);
     }
+    
+    public void deploy(Village vill){
+        for (ICharacterDecorator soldier : soldiers) {
+            System.out.println("deploying: "+ ((CharacterComponent)soldier.getComponent()));
+            vill.addRandomChar(soldier);
+            
+        }
+    }
 }

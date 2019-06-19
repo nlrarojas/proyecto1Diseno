@@ -49,6 +49,7 @@ public class VillageTile implements Serializable, Aggregate {
     
     public void addCharacter(ICharacterDecorator newCharacter){
         characters.add(newCharacter);
+        newCharacter.setSize(size, size);
     }
     
     public void setPosition(int x, int y){
@@ -64,12 +65,19 @@ public class VillageTile implements Serializable, Aggregate {
         for(Defense def: defences){
             def.setSize(size, size);
         }
+        for(ICharacterDecorator character: characters){
+            character.setSize(size,size);
+        }
     }
     
     public void draw(SpriteBatch batch){
         tileSpirte.draw(batch);
         for(Defense def: defences){
             def.draw(batch,x,y);
+        }
+        
+        for(ICharacterDecorator character: characters){
+            character.draw(batch,x,y);
         }
     }
 

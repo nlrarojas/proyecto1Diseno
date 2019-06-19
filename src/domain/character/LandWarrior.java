@@ -1,5 +1,6 @@
 package domain.character;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import domain.IPrototype;
 import java.io.Serializable;
 
@@ -16,8 +17,8 @@ public class LandWarrior implements ICharacterDecorator, IPrototype, Serializabl
     }
 
     @Override
-    public void draw() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void draw(SpriteBatch batch,int x ,int y) {
+        component.draw(batch, x, y);
     }
 
     @Override
@@ -39,5 +40,10 @@ public class LandWarrior implements ICharacterDecorator, IPrototype, Serializabl
     public IPrototype deepClone() {
         return new LandWarrior((ICharacterDecorator) ((CharacterComponent) component.getComponent()).deepClone());
     }
+    public void setSize(int width, int height){
+        CharacterComponent character = (CharacterComponent)component.getComponent();
+        character.setSize(width, height);
+    }
+    
 
 }

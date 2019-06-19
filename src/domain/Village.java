@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import domain.character.ICharacterDecorator;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -155,5 +156,32 @@ public class Village implements Serializable{
                 tiles[x][y].setsize(tileSize);
             }
         }
-    } 
+    }
+     
+      public void addRandomChar(ICharacterDecorator newChar){
+        //use cordinates avoiding borders
+        int newX;
+        int newY;
+        
+        float side = (float)Math.random();
+        if(side < 0.25){
+            newX = (int)(Math.random()*(size-0.01));
+            newY = size -1;
+        }else if(side < 0.5){
+            newX = size-1;
+            newY = (int)(Math.random()*(size-0.01));
+        }else if(side < 0.75){
+            newX = (int)(Math.random()*(size-0.01));
+            newY = 0;
+        }else{
+            newX = 0;
+            newY = (int)(Math.random()*(size-0.01));
+        }
+        
+
+        
+        System.out.println("x: " + newX + " ,y: "+ newY);
+        tiles[newX][newY].addCharacter(newChar);
+    }
+     
 }

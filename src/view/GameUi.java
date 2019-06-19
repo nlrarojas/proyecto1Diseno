@@ -61,6 +61,7 @@ public class GameUi implements IUserInterface {
                 GameManagerCommand command = (GameManagerCommand) GameUi.this.manager.getCommandManager().getCommand("game");
                 command.execute();
                 command.save();
+                
                 System.out.println("saved game");
                 //GameUi.this.setUi("menu");
                 
@@ -82,11 +83,12 @@ public class GameUi implements IUserInterface {
         Gdx.input.setInputProcessor(stage);
         GameManagerCommand command = (GameManagerCommand) manager.getCommandManager().getCommand("game");
         
+        
         Game currentGame = command.getStorage().getCurrentGame();
         if(currentGame.getVillage() == null){
             currentGame.generateVillage();
         }
-        
+        command.execute();
         village = currentGame.getVillage();
         
         
