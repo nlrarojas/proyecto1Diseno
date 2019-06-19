@@ -1,5 +1,6 @@
 package domain;
 
+import domain.generators.VillageGenerator;
 import java.io.Serializable;
 
 /**
@@ -10,6 +11,8 @@ public class Game implements Serializable {
 
     protected Army army;
     protected int level;
+    protected Village village;
+
 
     public Game(Army army, int level) {
         this.army = army;
@@ -36,4 +39,21 @@ public class Game implements Serializable {
     public String toString() {
         return "Game{" + "army=" + army + ", level=" + level + '}';
     }
+
+    public Village getVillage() {
+        return village;
+    }
+
+    public void setVillage(Village village) {
+        this.village = village;
+    }
+    
+    public void generateVillage(){
+        int diff = 100*level;
+        VillageGenerator generator = new VillageGenerator();
+        village = generator.generateVillage(diff);
+    }
+    
+    
+    
 }

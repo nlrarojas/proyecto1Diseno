@@ -25,14 +25,14 @@ import model.command.CommandArmyCreator;
  *
  * @author Charlie
  */
-public class ArmyManager implements IUserInterface{
+public class ArmyManagerUi implements IUserInterface{
     public  Stage stage;
     private UiManager manager;
     private Army army;
     private Skin skin;
     
     
-    public ArmyManager(UiManager manager) {
+    public ArmyManagerUi(UiManager manager) {
         this.manager = manager;
         stage = new Stage();
         skin = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
@@ -68,14 +68,13 @@ public class ArmyManager implements IUserInterface{
         final Table scrollTable = new Table();
         CharacterGenerator generator = CharacterGenerator.getInstance();
         ArrayList<ICharacterDecorator> characters = generator.getCharacters();
-        int ypos = 100;
         
         
         for(final ICharacterDecorator currentChar : characters){
             CharacterComponent currentComp = (CharacterComponent)(currentChar.getComponent());
             final String name = currentComp.getName();
-            System.out.println(currentComp);
-            System.out.println(name);
+            //System.out.println(currentComp);
+            //System.out.println(name);
             
             final Label currentLabel = new Label (name + ": " + army.count(name),skin);
             final TextButton currentPlusButton = new TextButton("+", skin);
@@ -88,7 +87,7 @@ public class ArmyManager implements IUserInterface{
             currentPlusButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                ArmyManager.this.army.addCharacter(currentChar);
+                ArmyManagerUi.this.army.addCharacter(currentChar);
                 currentLabel.setText(name + ": " + army.count(name));
             }
             
@@ -96,7 +95,7 @@ public class ArmyManager implements IUserInterface{
             currentLessButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                ArmyManager.this.army.remove(name);
+                ArmyManagerUi.this.army.remove(name);
                 currentLabel.setText(name + ": " + army.count(name));
             }
             
@@ -124,7 +123,7 @@ public class ArmyManager implements IUserInterface{
         
         //add back button
         TextButton backButton = new TextButton("Back", skin);
-        backButton.setSize(200, 50);
+        backButton.setSize(100, 50);
         
         
         stage.addActor(backButton);
@@ -132,7 +131,7 @@ public class ArmyManager implements IUserInterface{
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 //TODO add logic of character saving
-                ArmyManager.this.setUi("menu");
+                ArmyManagerUi.this.setUi("menu");
                 
             }
         });

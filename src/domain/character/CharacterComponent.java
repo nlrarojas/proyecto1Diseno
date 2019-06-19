@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  * @author Nelson
  */
-public class CharacterComponent implements ICharacterDecorator, IPrototype, Serializable {
+public class CharacterComponent implements ICharacterDecorator, IPrototype {
     private static final long serialVersionUID = 7214685095267757690L;
     protected String name;
     protected Appearance appearance;

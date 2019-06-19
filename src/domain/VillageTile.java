@@ -17,12 +17,12 @@ import java.util.ArrayList;
  * @author Charlie
  */
 public class VillageTile implements Serializable{
+    private static final long serialVersionUID = 1144637895267716690L;
     private ArrayList<Defense> defences;
     private ArrayList<ICharacterDecorator> characters;
     private int x;
     private int y;
-    private Texture tileTexture;
-    private Sprite tileSpirte;
+    private transient Sprite tileSpirte;
     private int size;
 
     public VillageTile(Texture tileTexture) {
@@ -36,6 +36,10 @@ public class VillageTile implements Serializable{
     public void addDefence(Defense newDefense){
         defences.add(newDefense);
         newDefense.setSize(size, size);
+    }
+    
+    public void setTexture(Texture newTexture){
+        this.tileSpirte = new Sprite(newTexture);
     }
     
     public void addCharacter(ICharacterDecorator newCharacter){

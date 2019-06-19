@@ -29,7 +29,6 @@ public class MenuUi implements IUserInterface {
     BitmapFont font;
     Skin skin;
     TextureAtlas buttonAtlas;
-    CommandManager commandManager;
     private final UiManager manager;
 
     //ui elements
@@ -45,50 +44,48 @@ public class MenuUi implements IUserInterface {
 
     public MenuUi(UiManager manager) {
         this.manager = manager;
-        //initiali ze command System----------------------------------------------------------------
-        commandManager = new CommandManager();
-        commandManager.registerCommand("Army", new CommandArmyCreator());
-        commandManager.registerCommand("Character", new CommandCharacterCreater());
-        commandManager.registerCommand("Defense", new CommandDefenseCreator());
-        commandManager.registerCommand("User", new CommandUserCreator());
-        commandManager.registerCommand("Village", new CommandVillageSettingsManager());
-        commandManager.registerCommand("Weapon", new CommandWeaponCreator());
 
         stage = new Stage();
         //load style from skin
         Skin skin = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
         //font.getData().setScale(2,2);
 
-     
+        int buttonWidht = 300;
+        int buttonHeight = 60;
 
         //create ui elements -----------------------------------------------------------------------
         TextButton playButton = new TextButton("Play", skin);
-        playButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 200);
-        playButton.setSize(200, 50);
+        playButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 100);
+        playButton.setSize(buttonWidht, buttonHeight);
+        
+        TextButton loadButton = new TextButton("Load Game", skin);
+        loadButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 200);
+        loadButton.setSize(buttonWidht, buttonHeight);
 
         TextButton characterButton = new TextButton("Character", skin);
         characterButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 300);
-        characterButton.setSize(200, 50);
+        characterButton.setSize(buttonWidht, buttonHeight);
         
         TextButton weaponButton = new TextButton("Weapon", skin);
         weaponButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 400);
-        weaponButton.setSize(200, 50);
+        weaponButton.setSize(buttonWidht, buttonHeight);
         
         TextButton defenseButton = new TextButton("Defense", skin);
         defenseButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 500);
-        defenseButton.setSize(200, 50);
+        defenseButton.setSize(buttonWidht, buttonHeight);
         
         TextButton armyButton = new TextButton("Army", skin);
         armyButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 600);
-        armyButton.setSize(200, 50);
+        armyButton.setSize(buttonWidht, buttonHeight);
         
         TextButton exitButton = new TextButton("Exit", skin);
         exitButton.setPosition(UiUtils.WIDHT / 2 - 100, UiUtils.HEIGHT - 700);
-        exitButton.setSize(200, 50);
+        exitButton.setSize(buttonWidht, buttonHeight);
 
 
         //add ui elements to scene ------------------------------------------------------------------
         stage.addActor(playButton);
+        stage.addActor(loadButton);
         stage.addActor(characterButton);
         stage.addActor(weaponButton);
         stage.addActor(defenseButton);
@@ -101,6 +98,14 @@ public class MenuUi implements IUserInterface {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 MenuUi.this.setUi("game");
                 System.out.println("Going to game");
+            }
+        });
+        
+        loadButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                MenuUi.this.setUi("load");
+                System.out.println("Going to load");
             }
         });
 

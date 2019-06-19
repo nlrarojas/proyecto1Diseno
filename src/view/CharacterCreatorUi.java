@@ -275,6 +275,23 @@ public class CharacterCreatorUi implements IUserInterface {
                 //System.out.println("Button Pressed");
             }
         });
+        
+        
+        //add back button
+        TextButton backButton = new TextButton("Back", skin);
+        backButton.setSize(100, 50);
+        backButton.setPosition(100, 0);
+        
+        
+        stage.addActor(backButton);
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                //TODO add logic of character saving
+                CharacterCreatorUi.this.setUi("menu");
+                
+            }
+        });
        
     }
 

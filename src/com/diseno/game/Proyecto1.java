@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import domain.Army;
+import domain.Game;
 import domain.generators.CharacterGenerator;
 import domain.generators.DefenseGenerator;
 import model.command.CommandArmyCreator;
@@ -17,10 +19,11 @@ import model.command.CommandUserCreator;
 import model.command.CommandVillageSettingsManager;
 import model.command.CommandWeaponCreator;
 import model.command.GameManagerCommand;
-import view.ArmyManager;
+import view.ArmyManagerUi;
 import view.CharacterCreatorUi;
 import view.DefenseCreatorUi;
 import view.GameUi;
+import view.LoadGameUi;
 import view.MenuUi;
 import view.UiManager;
 import view.WeaponCreatorUi;
@@ -44,16 +47,18 @@ public class Proyecto1 extends ApplicationAdapter {
         font = new BitmapFont();
         font.setColor(Color.BLACK);
 
-
+        Army newArmy = new Army(1);
+        Game newGame = new Game(newArmy,1);
+        
         //create all commands
         CommandManager command = new CommandManager();
-        command.registerCommand("army", new CommandArmyCreator());
+        command.registerCommand("army", new CommandArmyCreator(newArmy));
         command.registerCommand("character", new CommandCharacterCreater());
         command.registerCommand("defense", new CommandDefenseCreator());
         command.registerCommand("user", new CommandUserCreator());
         command.registerCommand("village", new CommandVillageSettingsManager());
         command.registerCommand("weapon", new CommandWeaponCreator());
-        command.registerCommand("game", new GameManagerCommand());
+        command.registerCommand("game", new GameManagerCommand(newGame));
         
         //creat ui
         uiManager = new UiManager(command);
@@ -62,7 +67,8 @@ public class Proyecto1 extends ApplicationAdapter {
         uiManager.addUi("game", new GameUi(uiManager));
         uiManager.addUi("weapon", new WeaponCreatorUi(uiManager));
         uiManager.addUi("defense", new DefenseCreatorUi(uiManager));
-        uiManager.addUi("army", new ArmyManager(uiManager));
+        uiManager.addUi("army", new ArmyManagerUi(uiManager));
+        uiManager.addUi("load", new LoadGameUi(uiManager));
         //set starting ui
         uiManager.setUi("menu");
 
@@ -78,7 +84,7 @@ public class Proyecto1 extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         //batch.draw(img, 0, 0);
-        font.draw(batch, "Proyecto 1 Diseño!!", WIDTH / 2 - 100, HEIGHT - 20);
+        //font.draw(batch, "Proyecto 1 Diseño!!", WIDTH / 2 - 100, HEIGHT - 20);
         batch.end();
 
         uiManager.render();

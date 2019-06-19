@@ -75,7 +75,7 @@ public class Appearance implements Serializable{
         ois.defaultReadObject(); 
         //load texture and create sprite after deserialization
         String savepath = (String)ois.readObject(); 
-        System.out.println("path: " + savepath);
+        //System.out.println("path: " + savepath);
         this.appearanceTexture = new Texture(Gdx.files.absolute(savepath));
         this.appearanceSprite = new Sprite(appearanceTexture);
     } 
