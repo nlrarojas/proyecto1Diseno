@@ -1,5 +1,6 @@
 package domain.character;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import domain.Appearance;
 import domain.IPrototype;
 import domain.Weapon;
@@ -37,8 +38,9 @@ public class CharacterComponent implements ICharacterDecorator, IPrototype {
     }
 
     @Override
-    public void draw() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void draw(SpriteBatch batch,int x ,int y) {
+        appearance.draw(batch, x, y);
+        
     }
 
     @Override
@@ -132,5 +134,8 @@ public class CharacterComponent implements ICharacterDecorator, IPrototype {
         return "CharacterComponent{" + "name=" + name + ", appearance=" + appearance + ", life=" + life + ", punchesPerTime=" + punchesPerTime + ", spaces=" + spaces + ", appearanceLevel=" + appearanceLevel + ", cost=" + cost + ", weapon=" + weapon + '}';
     }
     
+    public void setSize(int width, int height){
+        appearance.setSize(width, height);
+    }
     
 }

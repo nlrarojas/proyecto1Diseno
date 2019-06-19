@@ -26,6 +26,7 @@ public class GameManagerCommand implements ICommand, IAlmacenable {
     
     @Override
     public void execute() {
+        game.deployArmy();
         storage.setCurrentGame(game);
         
         

@@ -12,11 +12,15 @@ public class Game implements Serializable {
     protected Army army;
     protected int level;
     protected Village village;
+    public boolean movingArmy;
 
 
     public Game(Army army, int level) {
         this.army = army;
         this.level = level;
+        movingArmy = false;
+        //deployArmy();
+        
     }
 
     public Army getArmy() {
@@ -33,6 +37,7 @@ public class Game implements Serializable {
 
     public void setLevel(int level) {
         this.level = level;
+        movingArmy = false;
     }
 
     @Override
@@ -46,6 +51,7 @@ public class Game implements Serializable {
 
     public void setVillage(Village village) {
         this.village = village;
+        movingArmy = false;
     }
     
     public void generateVillage(){
@@ -54,6 +60,15 @@ public class Game implements Serializable {
         village = generator.generateVillage(diff);
     }
     
+    
+    public void deployArmy(){
+        System.out.println("deploying ...");
+        if(!movingArmy){
+            movingArmy = true;
+            army.deploy(village);
+        }
+        
+    }
     
     
 }
