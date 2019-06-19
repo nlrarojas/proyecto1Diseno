@@ -183,5 +183,28 @@ public class Village implements Serializable{
         System.out.println("x: " + newX + " ,y: "+ newY);
         tiles[newX][newY].addCharacter(newChar);
     }
+      
+    public void simulate(double deltaTime){
+          for(int x = 0; x < size;x++){
+            for (int y = 0; y < size; y++) {
+                tiles[x][y].simulate(deltaTime,this,x,y);
+
+            }
+        }
+      }
+      
+    public boolean freeTile(int x,int y){
+          if(x < 0 || y < 0 || x >= size || y >= size){
+              return false;
+          }
+          if(tiles[x][y].hasDefense()) return false;
+          if(isOverTownHall(x, y)) return false;
+          
+          return true;
+    }
+    
+    public VillageTile visitTile(int x, int y){
+        return tiles[x][y];
+    }
      
 }

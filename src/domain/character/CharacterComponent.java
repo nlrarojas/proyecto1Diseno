@@ -3,6 +3,8 @@ package domain.character;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import domain.Appearance;
 import domain.IPrototype;
+import domain.Village;
+import domain.VillageTile;
 import domain.Weapon;
 import java.io.Serializable;
 
@@ -20,6 +22,7 @@ public class CharacterComponent implements ICharacterDecorator, IPrototype {
     protected int appearanceLevel;
     protected int cost;
     protected Weapon weapon;
+    protected double elasepTime = 0;
     
     public CharacterComponent(String name, Appearance appearance, int life, int punchesPerTime, int spaces, int appearanceLevel, int cost, Weapon weapon) {
         
@@ -44,8 +47,21 @@ public class CharacterComponent implements ICharacterDecorator, IPrototype {
     }
 
     @Override
-    public void simulate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void simulate(double deltaTime,Village vil,int xCoord, int yCoord) {
+        elasepTime += deltaTime;
+        if(elasepTime > 1){
+        elasepTime = 0;
+        VillageTile currTile = vil.visitTile(xCoord, yCoord);
+        int newX = (int)(-1  + Math.random()*2.99f  + xCoord);
+        int newY = (int)(-1  + Math.random()*2.99f + yCoord) ;
+        //System.out.println("moving... " + newX + ", "+newY);
+        if(vil.freeTile(newX, newY) && (newX != xCoord || newY != yCoord)){
+            VillageTile newTile = vil.visitTile(newX, newY);
+            currTile.removeCharacter(this);
+            newTile.addCharacter(this);
+            //System.out.println("moving... " + newX + ", "+newY);
+        }
+        }
     }
 
     @Override

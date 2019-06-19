@@ -2,6 +2,7 @@ package domain.character;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import domain.IPrototype;
+import domain.Village;
 import java.io.Serializable;
 
 /**
@@ -22,8 +23,8 @@ public class LandWarrior implements ICharacterDecorator, IPrototype, Serializabl
     }
 
     @Override
-    public void simulate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void simulate(double deltaTime,Village vil,int xCoord, int yCoord) {
+        ((CharacterComponent)component.getComponent()).simulate(deltaTime,vil,xCoord,yCoord);
     }
 
     @Override

@@ -70,5 +70,10 @@ public class Game implements Serializable {
         
     }
     
+    public void simulate(double deltaTime){
+        if(village != null)
+        village.simulate(deltaTime);
+    }
+    
     
 }

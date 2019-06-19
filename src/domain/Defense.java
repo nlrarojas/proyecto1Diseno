@@ -138,4 +138,8 @@ public class Defense implements IPrototype,Serializable {
     public IPrototype deepClone() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public void simulate(double deltaTime,Village vill,int xCoord, int yCoord){
+        
+    }
 }

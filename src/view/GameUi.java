@@ -76,6 +76,7 @@ public class GameUi implements IUserInterface {
         stage.draw();
         stage.act();
         village.draw();
+        village.simulate(Gdx.graphics.getDeltaTime());
     }
 
     @Override
