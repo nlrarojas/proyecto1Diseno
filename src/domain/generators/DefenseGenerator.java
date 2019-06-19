@@ -3,7 +3,6 @@ package domain.generators;
 import domain.Defense;
 import domain.IPrototype;
 import domain.character.CharacterFactory;
-import domain.character.ICharacterComponent;
 import domain.character.ICharacterDecorator;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

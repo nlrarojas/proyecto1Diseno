@@ -17,6 +17,7 @@ import model.command.CommandUserCreator;
 import model.command.CommandVillageSettingsManager;
 import model.command.CommandWeaponCreator;
 import model.command.GameManagerCommand;
+import view.ArmyManager;
 import view.CharacterCreatorUi;
 import view.DefenseCreatorUi;
 import view.GameUi;
@@ -61,6 +62,7 @@ public class Proyecto1 extends ApplicationAdapter {
         uiManager.addUi("game", new GameUi(uiManager));
         uiManager.addUi("weapon", new WeaponCreatorUi(uiManager));
         uiManager.addUi("defense", new DefenseCreatorUi(uiManager));
+        uiManager.addUi("army", new ArmyManager(uiManager));
         //set starting ui
         uiManager.setUi("menu");
 
