@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import domain.character.ICharacterDecorator;
+import domain.iterator.Aggregate;
+import domain.iterator.Iterator;
+import domain.iterator.VillageIterator;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -16,7 +19,7 @@ import java.util.ArrayList;
  *
  * @author Charlie
  */
-public class VillageTile implements Serializable{
+public class VillageTile implements Serializable, Aggregate {
     private ArrayList<Defense> defences;
     private ArrayList<ICharacterDecorator> characters;
     private int x;
@@ -62,6 +65,11 @@ public class VillageTile implements Serializable{
         for(Defense def: defences){
             def.draw(batch,x,y);
         }
+    }
+
+    @Override
+    public Iterator getIterator(int size) {
+        return new VillageIterator(size);
     }
     
 }
